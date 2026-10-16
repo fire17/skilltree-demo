@@ -1,0 +1,573 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>השבט של נועה</title>
+<meta name="description" content="מוקאפ: שבט שעוזר. הצרכים של נועה באמצע, חברים סביב, וקישורים זמניים שנוצרים לעזרה אחת ומתפוגגים. נתונים מומצאים בלבד.">
+<!-- icons: truck blocks dog hammer salad landmark lock check car dumbbell wrench chef-hat leaf cake camera activity smartphone message-circle hand-heart users-round sparkles eye-off clock link-2 x rotate-ccw -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F5F5F7; --sheet:#FFFFFF; --ink:#1D1D1F; --mute:#6E6E73; --line:#E5E5EA; --fill:#F2F2F7; --blue:#007AFF; --amber:#C77700;
+  --glass:rgba(255,255,255,.72); --shadow:0 1px 2px rgba(0,0,0,.04),0 12px 32px rgba(0,0,0,.07);
+  --space:#0B0B10; --space2:#17171F;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ --bg:#000; --sheet:#1C1C1E; --ink:#F5F5F7; --mute:#98989D; --line:#38383A; --fill:#2C2C2E; --blue:#0A84FF; --amber:#FFB340; --glass:rgba(28,28,30,.72); --shadow:0 1px 2px rgba(0,0,0,.4),0 12px 32px rgba(0,0,0,.5); }
+}
+:root[data-theme="dark"]{ --bg:#000; --sheet:#1C1C1E; --ink:#F5F5F7; --mute:#98989D; --line:#38383A; --fill:#2C2C2E; --blue:#0A84FF; --amber:#FFB340; --glass:rgba(28,28,30,.72); --shadow:0 1px 2px rgba(0,0,0,.4),0 12px 32px rgba(0,0,0,.5); }
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:17px/1.47 -apple-system,BlinkMacSystemFont,"SF Pro Text","SF Hebrew","Heebo",system-ui,sans-serif;letter-spacing:-.01em;min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid color-mix(in srgb,var(--blue) 60%,transparent);outline-offset:2px;border-radius:10px}
+.i{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.top{position:sticky;top:0;z-index:10;display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;padding:14px max(16px,calc((100% - 1240px)/2 + 20px)) 12px;background:var(--glass);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:.5px solid var(--line)}
+.top h1{margin:0;font-weight:700;font-size:26px;letter-spacing:-.02em;flex:1 1 220px}
+.top h1 small{display:block;font-size:14px;font-weight:400;color:var(--mute);letter-spacing:0}
+.seg{display:flex;background:color-mix(in srgb,var(--ink) 7%,transparent);border-radius:10px;padding:2px}
+.seg a{border:0;background:none;padding:6px 14px;border-radius:8px;cursor:pointer;font-weight:600;font-size:14px;color:var(--ink);text-decoration:none;white-space:nowrap}
+.seg [aria-current="page"]{background:var(--sheet);box-shadow:0 1px 3px rgba(0,0,0,.12),0 0 0 .5px rgba(0,0,0,.04)}
+.wrap{max-width:1240px;margin:0 auto;padding:20px 16px 32px;display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:20px;align-items:start}
+
+/* canvas */
+.canvas{position:relative;border-radius:28px;overflow:hidden;color:#F5F5F7;background:radial-gradient(120% 90% at 50% 48%,var(--space2) 0%,var(--space) 62%);box-shadow:0 20px 60px rgba(0,0,0,.18)}
+.ctl{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;padding:18px 22px 0}
+.play{height:44px;border-radius:22px;border:0;background:#fff;color:#000;display:flex;align-items:center;gap:8px;padding:0 18px 0 14px;cursor:pointer;flex:none;font-weight:600;font-size:15px}
+.play svg{width:16px;height:16px}
+.play .sm{display:none}
+@media (max-width:600px){ .play .sm{display:inline} }
+.days{display:flex;gap:4px;direction:rtl}
+.days span{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:600;color:rgba(255,255,255,.38);background:rgba(255,255,255,.05);transition:background .4s,color .4s}
+.days span.on{background:rgba(255,255,255,.92);color:#000}
+.days span.past{color:rgba(255,255,255,.7);background:rgba(255,255,255,.12)}
+.tally{margin-inline-start:auto;text-align:end;line-height:1.2}
+.tally b{font-size:17px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.tally b em{font-style:normal;display:inline-block;transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
+.tally b em.bump{transform:scale(1.35)}
+.tally small{display:flex;align-items:center;justify-content:flex-end;gap:4px;font-size:11.5px;color:rgba(255,255,255,.45)}
+svg#viz{display:block;width:100%;height:auto;max-height:max(420px,calc(100vh - 330px));margin:0 auto;touch-action:manipulation;user-select:none;-webkit-user-select:none}
+.dock{min-height:92px;padding:0 18px 18px;display:flex;align-items:flex-end;justify-content:center}
+.hint{font-size:14px;color:rgba(255,255,255,.55);text-align:center;max-width:560px;margin:0 auto 6px;transition:opacity .3s}
+.card{width:min(100%,520px);display:grid;grid-template-columns:auto 1fr;gap:4px 12px;align-items:center;padding:12px 14px;border-radius:20px;background:rgba(44,44,46,.82);-webkit-backdrop-filter:blur(20px) saturate(160%);backdrop-filter:blur(20px) saturate(160%);border:.5px solid rgba(255,255,255,.12);box-shadow:0 12px 40px rgba(0,0,0,.45);animation:rise .35s cubic-bezier(.2,.9,.3,1.1)}
+@keyframes rise{from{transform:translateY(16px);opacity:0}}
+.card .av{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:19px;background:#3A3A3C;grid-row:span 2}
+.card .who{font-weight:700;font-size:16px}
+.card .what{font-size:13.5px;color:rgba(255,255,255,.7);display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center}
+.card .what span{display:inline-flex;align-items:center;gap:4px}
+.card .acts{grid-column:1/-1;display:flex;gap:8px;margin-top:8px}
+.card .acts button{flex:1;height:40px;border-radius:12px;border:0;font-weight:600;font-size:15px;cursor:pointer}
+.card .ok{background:#0A84FF;color:#fff}
+.card .no{background:rgba(255,255,255,.1);color:#fff}
+.card .acts button.press{transform:scale(.95);filter:brightness(1.25);transition:transform .12s,filter .12s}
+.card .fine{grid-column:1/-1;font-size:12px;color:rgba(255,255,255,.45);display:flex;align-items:center;gap:5px}
+.cap{display:none;position:absolute;left:0;right:0;bottom:20px;text-align:center;font-size:15px;color:rgba(255,255,255,.5)}
+
+/* svg nodes */
+.n{cursor:pointer;outline:none}
+.n text,.lk text,.bub text{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Hebrew","Heebo",sans-serif}
+.lbl{font-weight:600;fill:rgba(255,255,255,.92);paint-order:stroke;stroke:#0E0E14;stroke-linejoin:round}
+.sub{font-weight:500;fill:rgba(255,255,255,.55);paint-order:stroke;stroke:#0E0E14;stroke-linejoin:round;font-variant-numeric:tabular-nums}
+.n:focus-visible .ring{stroke:#fff;stroke-opacity:1}
+.bub{cursor:pointer}
+.orbit{fill:none;stroke:rgba(255,255,255,.07);stroke-dasharray:2 7}
+
+/* panel */
+.panel{background:var(--sheet);border-radius:28px;box-shadow:var(--shadow);padding:22px}
+.panel h2{margin:0 0 2px;font-size:22px;font-weight:700;letter-spacing:-.02em}
+.panel .lead{margin:0 0 12px;color:var(--mute);font-size:14px}
+.panel h3{font-size:13px;margin:18px 0 6px;color:var(--mute);font-weight:600;display:flex;align-items:center;gap:6px}
+.panel h3 .ct{font-weight:500;color:var(--mute);margin-inline-start:auto;font-variant-numeric:tabular-nums}
+.priv{display:grid;grid-template-columns:auto 1fr;gap:8px;background:var(--fill);border-radius:14px;padding:10px 12px;font-size:13px;line-height:1.45;color:var(--ink)}
+.priv .i{width:18px;height:18px;color:var(--mute);margin-top:1px}
+.rows{list-style:none;margin:0;padding:0}
+.rows li{display:grid;grid-template-columns:auto 1fr auto;gap:0 10px;align-items:center;padding:8px 0;border-bottom:.5px solid var(--line);font-size:15px}
+.rows li:last-child{border-bottom:0}
+.rows li small{display:block;color:var(--mute);font-size:12.5px;line-height:1.3}
+.rows li.sel{background:color-mix(in srgb,var(--blue) 8%,transparent);border-radius:10px;margin:0 -8px;padding:8px}
+.rows li.done{opacity:.55}
+.tile{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;font-size:16px;border:1.5px solid var(--h);color:var(--h);background:color-mix(in srgb,var(--h) 12%,transparent)}
+.tile.full{background:var(--h);color:#fff;border-color:transparent}
+.tile.av{border-radius:50%;background:var(--fill);border:0;color:var(--ink);font-weight:700;font-size:14px}
+.sw{position:relative;width:46px;height:28px;border-radius:14px;border:0;background:var(--line);cursor:pointer;flex:none;transition:background .2s}
+.sw::after{content:"";position:absolute;top:2px;right:2px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .2s}
+.sw[aria-checked="true"]{background:#30D158}
+.sw[aria-checked="true"]::after{transform:translateX(-18px)}
+.swl{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--mute)}
+.tag{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:600;padding:1px 7px;border-radius:999px;background:var(--fill);color:var(--mute);margin-inline-start:4px;vertical-align:1px}
+.tag.s2{background:color-mix(in srgb,#FF375F 14%,transparent);color:#D70035}
+.tag .i{width:11px;height:11px}
+.btn{border:0;border-radius:10px;padding:6px 12px;font-size:13.5px;font-weight:600;cursor:pointer;background:color-mix(in srgb,var(--blue) 12%,transparent);color:var(--blue);white-space:nowrap}
+.btn[disabled]{opacity:.45;cursor:default}
+.cd{font-variant-numeric:tabular-nums;color:var(--mute);font-size:12.5px}
+.meter{grid-column:2/-1;height:3px;border-radius:2px;background:var(--fill);overflow:hidden;margin-top:6px}
+.meter i{display:block;height:100%;border-radius:2px;background:var(--h);transform-origin:right}
+.tl{list-style:none;margin:0;padding:0 0 0 0;position:relative}
+.tl li{position:relative;padding:4px 18px 8px 0;font-size:14px}
+.tl li::before{content:"";position:absolute;right:4px;top:12px;bottom:-4px;width:1.5px;background:var(--line)}
+.tl li:last-child::before{display:none}
+.tl li::after{content:"";position:absolute;right:0;top:8px;width:10px;height:10px;border-radius:50%;background:var(--sheet);border:2px solid var(--h)}
+.tl li small{display:block;color:var(--mute);font-size:12px}
+.empty{font-size:13.5px;color:var(--mute);padding:4px 0}
+.fcard{background:var(--fill);border-radius:16px;padding:12px 14px;margin-bottom:6px}
+.fcard .hd{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.fcard .hd b{font-size:17px}
+.fcard .x{margin-inline-start:auto;border:0;background:none;cursor:pointer;color:var(--mute);padding:4px;font-size:18px;display:grid}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:500;padding:4px 10px;border-radius:999px;background:color-mix(in srgb,var(--h) 16%,transparent)}
+.chip .i{color:var(--h)}
+.chip small{color:var(--mute);font-size:11px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12.5px;color:var(--mute);margin-top:8px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:50%}
+
+body.video .top,body.video .panel{display:none}
+body.video .wrap{display:block;padding:0;max-width:none}
+body.video .canvas{position:relative;top:0;border-radius:0;box-shadow:none;min-height:100vh;display:flex;flex-direction:column}
+body.video .ctl{padding:26px 36px 0}
+body.video svg#viz{height:calc(100vh - 210px);max-height:none;width:auto;margin:0 auto;flex:none}
+body.video .dock{min-height:100px;padding-bottom:46px}
+body.video .cap{display:block}
+@media (min-width:901px){ .canvas{position:sticky;top:84px} }
+@media (max-width:900px){ .wrap{grid-template-columns:1fr;padding:16px 12px 32px} }
+@media (max-width:600px){
+  svg#viz{max-height:none} .play .lg{display:none} .ctl{flex-wrap:wrap} .days{margin-inline-start:auto}
+  .top h1{font-size:22px} .seg a{padding:6px 10px;font-size:13px}
+  .ctl{padding:14px 14px 0;gap:10px} .play{height:40px;padding:0 14px 0 12px;font-size:14px}
+  .days span{width:26px;height:26px;font-size:12px} .days{gap:3px}
+  .tally{flex:1 1 100%;text-align:start;display:flex;align-items:baseline;gap:8px} .tally small{justify-content:flex-start}
+  .dock{padding:0 12px 14px;min-height:80px} .hint{font-size:13px}
+  .panel{padding:18px;border-radius:24px}
+}
+@media (prefers-reduced-motion:reduce){ .card{animation:none} .tally b em{transition:none} }
+</style>
+</head>
+<body>
+<header class="top">
+  <h1>השבט של נועה<small>שבט שעוזר: קישורים זמניים לעזרה, בלי היררכיה</small></h1>
+  <nav class="seg" aria-label="עמודים"><a href="index.html">העץ של נועה</a><a href="age.html">לפי גיל</a><a aria-current="page" href="tribe.html">השבט</a></nav>
+</header>
+<main class="wrap">
+  <section class="canvas" aria-label="השבט: צרכים, הצעות וקישורים זמניים">
+    <div class="ctl">
+      <button class="play" id="play" aria-label="הדמיית שבוע"><svg viewBox="0 0 24 24"><path d="M7 4v16l13-8z" fill="currentColor"/></svg><span class="lg">הדמיית שבוע</span><span class="sm">הדמיה</span></button>
+      <div class="days" id="days" aria-hidden="true"><span>א</span><span>ב</span><span>ג</span><span>ד</span><span>ה</span><span>ו</span><span>ש</span></div>
+      <div class="tally" aria-live="polite"><b id="tally">עזרתי <em>0</em> · קיבלתי <em>0</em></b><small id="tallyNote"></small></div>
+    </div>
+    <svg id="viz" viewBox="0 0 1000 1000" role="group" aria-label="נועה במרכז, הצרכים שלה סביבה, והחברים בטבעת החיצונית"></svg>
+    <div class="dock" id="dock"></div>
+    <div class="cap">עץ יכולות · שבט שעוזר · רק מה שבחרו לשתף · קישורים זמניים · נתונים מומצאים</div>
+  </section>
+  <aside class="panel" id="panel"></aside>
+</main>
+<script>
+// Icons: Lucide (lucide.dev), ISC License, Copyright (c) Lucide Contributors
+const ICONS = {"activity": "<path d=\"M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2\" />", "angry": "<circle cx=\"12\" cy=\"12\" r=\"10\" /> <path d=\"M16 16s-1.5-2-4-2-4 2-4 2\" /> <path d=\"M7.5 8 10 9\" /> <path d=\"m14 9 2.5-1\" /> <path d=\"M9 10h.01\" /> <path d=\"M15 10h.01\" />", "apple": "<path d=\"M12 20.94c1.5 0 2.75 1.06 4 1.06 3 0 6-8 6-12.22A4.91 4.91 0 0 0 17 5c-2.22 0-4 1.44-5 2-1-.56-2.78-2-5-2a4.9 4.9 0 0 0-5 4.78C2 14 5 22 8 22c1.25 0 2.5-1.06 4-1.06Z\" /> <path d=\"M10 2c1 .5 2 2 2 5\" />", "armchair": "<path d=\"M19 9V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v3\" /> <path d=\"M3 16a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V11a2 2 0 0 0-4 0z\" /> <path d=\"M5 18v2\" /> <path d=\"M19 18v2\" />", "baby": "<path d=\"M9 12h.01\" /> <path d=\"M15 12h.01\" /> <path d=\"M10 16c.5.3 1.2.5 2 .5s1.5-.2 2-.5\" /> <path d=\"M19 6.3a9 9 0 0 1 1.8 3.9 2 2 0 0 1 0 3.6 9 9 0 0 1-17.6 0 2 2 0 0 1 0-3.6A9 9 0 0 1 12 3c2 0 3.5 1.1 3.5 2.5s-.9 2.5-2 2.5c-.8 0-1.5-.4-1.5-1\" />", "backpack": "<path d=\"M4 10a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z\" /> <path d=\"M8 10h8\" /> <path d=\"M8 18h8\" /> <path d=\"M8 22v-6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v6\" /> <path d=\"M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2\" />", "badge-percent": "<path d=\"M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z\" /> <path d=\"m15 9-6 6\" /> <path d=\"M9 9h.01\" /> <path d=\"M15 15h.01\" />", "bike": "<circle cx=\"18.5\" cy=\"17.5\" r=\"3.5\" /> <circle cx=\"5.5\" cy=\"17.5\" r=\"3.5\" /> <circle cx=\"15\" cy=\"5\" r=\"1\" /> <path d=\"M12 17.5V14l-3-3 4-3 2 3h2\" />", "blocks": "<rect width=\"7\" height=\"7\" x=\"14\" y=\"3\" rx=\"1\" /> <path d=\"M10 21V8a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H3\" />", "bone": "<path d=\"M17 10c.7-.7 1.69 0 2.5 0a2.5 2.5 0 1 0 0-5 .5.5 0 0 1-.5-.5 2.5 2.5 0 1 0-5 0c0 .81.7 1.8 0 2.5l-7 7c-.7.7-1.69 0-2.5 0a2.5 2.5 0 0 0 0 5c.28 0 .5.22.5.5a2.5 2.5 0 1 0 5 0c0-.81-.7-1.8 0-2.5Z\" />", "book-open": "<path d=\"M12 7v14\" /> <path d=\"M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z\" />", "briefcase": "<path d=\"M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16\" /> <rect width=\"20\" height=\"14\" x=\"2\" y=\"6\" rx=\"2\" />", "building": "<rect width=\"16\" height=\"20\" x=\"4\" y=\"2\" rx=\"2\" ry=\"2\" /> <path d=\"M9 22v-4h6v4\" /> <path d=\"M8 6h.01\" /> <path d=\"M16 6h.01\" /> <path d=\"M12 6h.01\" /> <path d=\"M12 10h.01\" /> <path d=\"M12 14h.01\" /> <path d=\"M16 10h.01\" /> <path d=\"M16 14h.01\" /> <path d=\"M8 10h.01\" /> <path d=\"M8 14h.01\" />", "building-2": "<path d=\"M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z\" /> <path d=\"M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2\" /> <path d=\"M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2\" /> <path d=\"M10 6h4\" /> <path d=\"M10 10h4\" /> <path d=\"M10 14h4\" /> <path d=\"M10 18h4\" />", "bus": "<path d=\"M8 6v6\" /> <path d=\"M15 6v6\" /> <path d=\"M2 12h19.6\" /> <path d=\"M18 18h3s.5-1.7.8-2.8c.1-.4.2-.8.2-1.2 0-.4-.1-.8-.2-1.2l-1.4-5C20.1 6.8 19.1 6 18 6H4a2 2 0 0 0-2 2v10h3\" /> <circle cx=\"7\" cy=\"18\" r=\"2\" /> <path d=\"M9 18h5\" /> <circle cx=\"16\" cy=\"18\" r=\"2\" />", "bus-front": "<path d=\"M4 6 2 7\" /> <path d=\"M10 6h4\" /> <path d=\"m22 7-2-1\" /> <rect width=\"16\" height=\"16\" x=\"4\" y=\"3\" rx=\"2\" /> <path d=\"M4 11h16\" /> <path d=\"M8 15h.01\" /> <path d=\"M16 15h.01\" /> <path d=\"M6 19v2\" /> <path d=\"M18 21v-2\" />", "cake": "<path d=\"M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8\" /> <path d=\"M4 16s.5-1 2-1 2.5 2 4 2 2.5-2 4-2 2.5 2 4 2 2-1 2-1\" /> <path d=\"M2 21h20\" /> <path d=\"M7 8v3\" /> <path d=\"M12 8v3\" /> <path d=\"M17 8v3\" /> <path d=\"M7 4h.01\" /> <path d=\"M12 4h.01\" /> <path d=\"M17 4h.01\" />", "cake-slice": "<circle cx=\"9\" cy=\"7\" r=\"2\" /> <path d=\"M7.2 7.9 3 11v9c0 .6.4 1 1 1h16c.6 0 1-.4 1-1v-9c0-2-3-6-7-8l-3.6 2.6\" /> <path d=\"M16 13H3\" /> <path d=\"M16 17H3\" />", "camera": "<path d=\"M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z\" /> <circle cx=\"12\" cy=\"13\" r=\"3\" />", "car": "<path d=\"M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2\" /> <circle cx=\"7\" cy=\"17\" r=\"2\" /> <path d=\"M9 17h6\" /> <circle cx=\"17\" cy=\"17\" r=\"2\" />", "cat": "<path d=\"M12 5c.67 0 1.35.09 2 .26 1.78-2 5.03-2.84 6.42-2.26 1.4.58-.42 7-.42 7 .57 1.07 1 2.24 1 3.44C21 17.9 16.97 21 12 21s-9-3-9-7.56c0-1.25.5-2.4 1-3.44 0 0-1.89-6.42-.5-7 1.39-.58 4.72.23 6.5 2.23A9.04 9.04 0 0 1 12 5Z\" /> <path d=\"M8 14v.5\" /> <path d=\"M16 14v.5\" /> <path d=\"M11.25 16.25h1.5L12 17l-.75-.75Z\" />", "check": "<path d=\"M20 6 9 17l-5-5\" />", "chef-hat": "<path d=\"M17 21a1 1 0 0 0 1-1v-5.35c0-.457.316-.844.727-1.041a4 4 0 0 0-2.134-7.589 5 5 0 0 0-9.186 0 4 4 0 0 0-2.134 7.588c.411.198.727.585.727 1.041V20a1 1 0 0 0 1 1Z\" /> <path d=\"M6 17h12\" />", "circle": "<circle cx=\"12\" cy=\"12\" r=\"10\" />", "clipboard-list": "<rect width=\"8\" height=\"4\" x=\"8\" y=\"2\" rx=\"1\" ry=\"1\" /> <path d=\"M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2\" /> <path d=\"M12 11h4\" /> <path d=\"M12 16h4\" /> <path d=\"M8 11h.01\" /> <path d=\"M8 16h.01\" />", "clock": "<circle cx=\"12\" cy=\"12\" r=\"10\" /> <polyline points=\"12 6 12 12 16 14\" />", "coffee": "<path d=\"M10 2v2\" /> <path d=\"M14 2v2\" /> <path d=\"M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1\" /> <path d=\"M6 2v2\" />", "coins": "<circle cx=\"8\" cy=\"8\" r=\"6\" /> <path d=\"M18.09 10.37A6 6 0 1 1 10.34 18\" /> <path d=\"M7 6h1v4\" /> <path d=\"m16.71 13.88.7.71-2.82 2.82\" />", "credit-card": "<rect width=\"20\" height=\"14\" x=\"2\" y=\"5\" rx=\"2\" /> <line x1=\"2\" x2=\"22\" y1=\"10\" y2=\"10\" />", "dog": "<path d=\"M11.25 16.25h1.5L12 17z\" /> <path d=\"M16 14v.5\" /> <path d=\"M4.42 11.247A13.152 13.152 0 0 0 4 14.556C4 18.728 7.582 21 12 21s8-2.272 8-6.444a11.702 11.702 0 0 0-.493-3.309\" /> <path d=\"M8 14v.5\" /> <path d=\"M8.5 8.5c-.384 1.05-1.083 2.028-2.344 2.5-1.931.722-3.576-.297-3.656-1-.113-.994 1.177-6.53 4-7 1.923-.321 3.651.845 3.651 2.235A7.497 7.497 0 0 1 14 5.277c0-1.39 1.844-2.598 3.767-2.277 2.823.47 4.113 6.006 4 7-.08.703-1.725 1.722-3.656 1-1.261-.472-1.855-1.45-2.239-2.5\" />", "drama": "<path d=\"M10 11h.01\" /> <path d=\"M14 6h.01\" /> <path d=\"M18 6h.01\" /> <path d=\"M6.5 13.1h.01\" /> <path d=\"M22 5c0 9-4 12-6 12s-6-3-6-12c0-2 2-3 6-3s6 1 6 3\" /> <path d=\"M17.4 9.9c-.8.8-2 .8-2.8 0\" /> <path d=\"M10.1 7.1C9 7.2 7.7 7.7 6 8.6c-3.5 2-4.7 3.9-3.7 5.6 4.5 7.8 9.5 8.4 11.2 7.4.9-.5 1.9-2.1 1.9-4.7\" /> <path d=\"M9.1 16.5c.3-1.1 1.4-1.7 2.4-1.4\" />", "droplets": "<path d=\"M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z\" /> <path d=\"M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.97\" />", "dumbbell": "<path d=\"M14.4 14.4 9.6 9.6\" /> <path d=\"M18.657 21.485a2 2 0 1 1-2.829-2.828l-1.767 1.768a2 2 0 1 1-2.829-2.829l6.364-6.364a2 2 0 1 1 2.829 2.829l-1.768 1.767a2 2 0 1 1 2.828 2.829z\" /> <path d=\"m21.5 21.5-1.4-1.4\" /> <path d=\"M3.9 3.9 2.5 2.5\" /> <path d=\"M6.404 12.768a2 2 0 1 1-2.829-2.829l1.768-1.767a2 2 0 1 1-2.828-2.829l2.828-2.828a2 2 0 1 1 2.829 2.828l1.767-1.768a2 2 0 1 1 2.829 2.829z\" />", "eye-off": "<path d=\"M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49\" /> <path d=\"M14.084 14.158a3 3 0 0 1-4.242-4.242\" /> <path d=\"M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143\" /> <path d=\"m2 2 20 20\" />", "fish": "<path d=\"M6.5 12c.94-3.46 4.94-6 8.5-6 3.56 0 6.06 2.54 7 6-.94 3.47-3.44 6-7 6s-7.56-2.53-8.5-6Z\" /> <path d=\"M18 12v.5\" /> <path d=\"M16 17.93a9.77 9.77 0 0 1 0-11.86\" /> <path d=\"M7 10.67C7 8 5.58 5.97 2.73 5.5c-1 1.5-1 5 .23 6.5-1.24 1.5-1.24 5-.23 6.5C5.58 18.03 7 16 7 13.33\" /> <path d=\"M10.46 7.26C10.2 5.88 9.17 4.24 8 3h5.8a2 2 0 0 1 1.98 1.67l.23 1.4\" /> <path d=\"m16.01 17.93-.23 1.4A2 2 0 0 1 13.8 21H9.5a5.96 5.96 0 0 0 1.49-3.98\" />", "flag": "<path d=\"M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z\" /> <line x1=\"4\" x2=\"4\" y1=\"22\" y2=\"15\" />", "flower-2": "<path d=\"M12 5a3 3 0 1 1 3 3m-3-3a3 3 0 1 0-3 3m3-3v1M9 8a3 3 0 1 0 3 3M9 8h1m5 0a3 3 0 1 1-3 3m3-3h-1m-2 3v-1\" /> <circle cx=\"12\" cy=\"8\" r=\"2\" /> <path d=\"M12 10v12\" /> <path d=\"M12 22c4.2 0 7-1.667 7-5-4.2 0-7 1.667-7 5Z\" /> <path d=\"M12 22c-4.2 0-7-1.667-7-5 4.2 0 7 1.667 7 5Z\" />", "footprints": "<path d=\"M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 10 3.8 10 5.5c0 3.11-2 5.66-2 8.68V16a2 2 0 1 1-4 0Z\" /> <path d=\"M20 20v-2.38c0-2.12 1.03-3.12 1-5.62-.03-2.72-1.49-6-4.5-6C14.63 6 14 7.8 14 9.5c0 3.11 2 5.66 2 8.68V20a2 2 0 1 0 4 0Z\" /> <path d=\"M16 17h4\" /> <path d=\"M4 13h4\" />", "gamepad-2": "<line x1=\"6\" x2=\"10\" y1=\"11\" y2=\"11\" /> <line x1=\"8\" x2=\"8\" y1=\"9\" y2=\"13\" /> <line x1=\"15\" x2=\"15.01\" y1=\"12\" y2=\"12\" /> <line x1=\"18\" x2=\"18.01\" y1=\"10\" y2=\"10\" /> <path d=\"M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z\" />", "graduation-cap": "<path d=\"M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z\" /> <path d=\"M22 10v6\" /> <path d=\"M6 12.5V16a6 3 0 0 0 12 0v-3.5\" />", "guitar": "<path d=\"m11.9 12.1 4.514-4.514\" /> <path d=\"M20.1 2.3a1 1 0 0 0-1.4 0l-1.114 1.114A2 2 0 0 0 17 4.828v1.344a2 2 0 0 1-.586 1.414A2 2 0 0 1 17.828 7h1.344a2 2 0 0 0 1.414-.586L21.7 5.3a1 1 0 0 0 0-1.4z\" /> <path d=\"m6 16 2 2\" /> <path d=\"M8.2 9.9C8.7 8.8 9.8 8 11 8c2.8 0 5 2.2 5 5 0 1.2-.8 2.3-1.9 2.8l-.9.4A2 2 0 0 0 12 18a4 4 0 0 1-4 4c-3.3 0-6-2.7-6-6a4 4 0 0 1 4-4 2 2 0 0 0 1.8-1.2z\" /> <circle cx=\"11.5\" cy=\"12.5\" r=\".5\" fill=\"currentColor\" />", "hammer": "<path d=\"m15 12-8.373 8.373a1 1 0 1 1-3-3L12 9\" /> <path d=\"m18 15 4-4\" /> <path d=\"m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172V7l-2.26-2.26a6 6 0 0 0-4.202-1.756L9 2.96l.92.82A6.18 6.18 0 0 1 12 8.4V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5\" />", "hand-coins": "<path d=\"M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17\" /> <path d=\"m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9\" /> <path d=\"m2 16 6 6\" /> <circle cx=\"16\" cy=\"9\" r=\"2.9\" /> <circle cx=\"6\" cy=\"5\" r=\"3\" />", "hand-heart": "<path d=\"M11 14h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 16\" /> <path d=\"m7 20 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9\" /> <path d=\"m2 15 6 6\" /> <path d=\"M19.5 8.5c.7-.7 1.5-1.6 1.5-2.7A2.73 2.73 0 0 0 16 4a2.78 2.78 0 0 0-5 1.8c0 1.2.8 2 1.5 2.8L16 12Z\" />", "hand-helping": "<path d=\"M11 12h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 14\" /> <path d=\"m7 18 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9\" /> <path d=\"m2 13 6 6\" />", "heart": "<path d=\"M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z\" />", "heart-handshake": "<path d=\"M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z\" /> <path d=\"M12 5 9.04 7.96a2.17 2.17 0 0 0 0 3.08c.82.82 2.13.85 3 .07l2.07-1.9a2.82 2.82 0 0 1 3.79 0l2.96 2.66\" /> <path d=\"m18 15-2-2\" /> <path d=\"m15 18-2-2\" />", "hourglass": "<path d=\"M5 22h14\" /> <path d=\"M5 2h14\" /> <path d=\"M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22\" /> <path d=\"M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2\" />", "house": "<path d=\"M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8\" /> <path d=\"M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\" />", "house-plus": "<path d=\"M13.22 2.416a2 2 0 0 0-2.511.057l-7 5.999A2 2 0 0 0 3 10v9a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7.354\" /> <path d=\"M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8\" /> <path d=\"M15 6h6\" /> <path d=\"M18 3v6\" />", "id-card": "<path d=\"M16 10h2\" /> <path d=\"M16 14h2\" /> <path d=\"M6.17 15a3 3 0 0 1 5.66 0\" /> <circle cx=\"9\" cy=\"11\" r=\"2\" /> <rect x=\"2\" y=\"5\" width=\"20\" height=\"14\" rx=\"2\" />", "key-round": "<path d=\"M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z\" /> <circle cx=\"16.5\" cy=\"7.5\" r=\".5\" fill=\"currentColor\" />", "landmark": "<line x1=\"3\" x2=\"21\" y1=\"22\" y2=\"22\" /> <line x1=\"6\" x2=\"6\" y1=\"18\" y2=\"11\" /> <line x1=\"10\" x2=\"10\" y1=\"18\" y2=\"11\" /> <line x1=\"14\" x2=\"14\" y1=\"18\" y2=\"11\" /> <line x1=\"18\" x2=\"18\" y1=\"18\" y2=\"11\" /> <polygon points=\"12 2 20 7 4 7\" />", "leaf": "<path d=\"M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z\" /> <path d=\"M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12\" />", "link-2": "<path d=\"M9 17H7A5 5 0 0 1 7 7h2\" /> <path d=\"M15 7h2a5 5 0 1 1 0 10h-2\" /> <line x1=\"8\" x2=\"16\" y1=\"12\" y2=\"12\" />", "lock": "<rect width=\"18\" height=\"11\" x=\"3\" y=\"11\" rx=\"2\" ry=\"2\" /> <path d=\"M7 11V7a5 5 0 0 1 10 0v4\" />", "medal": "<path d=\"M7.21 15 2.66 7.14a2 2 0 0 1 .13-2.2L4.4 2.8A2 2 0 0 1 6 2h12a2 2 0 0 1 1.6.8l1.6 2.14a2 2 0 0 1 .14 2.2L16.79 15\" /> <path d=\"M11 12 5.12 2.2\" /> <path d=\"m13 12 5.88-9.8\" /> <path d=\"M8 7h8\" /> <circle cx=\"12\" cy=\"17\" r=\"5\" /> <path d=\"M12 18v-2h-.5\" />", "message-circle": "<path d=\"M7.9 20A9 9 0 1 0 4 16.1L2 22Z\" />", "message-circle-heart": "<path d=\"M7.9 20A9 9 0 1 0 4 16.1L2 22Z\" /> <path d=\"M15.8 9.2a2.5 2.5 0 0 0-3.5 0l-.3.4-.35-.3a2.42 2.42 0 1 0-3.2 3.6l3.6 3.5 3.6-3.5c1.2-1.2 1.1-2.7.2-3.7\" />", "messages-square": "<path d=\"M14 9a2 2 0 0 1-2 2H6l-4 4V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2z\" /> <path d=\"M18 9h2a2 2 0 0 1 2 2v11l-4-4h-6a2 2 0 0 1-2-2v-1\" />", "milk": "<path d=\"M8 2h8\" /> <path d=\"M9 2v2.789a4 4 0 0 1-.672 2.219l-.656.984A4 4 0 0 0 7 10.212V20a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-9.789a4 4 0 0 0-.672-2.219l-.656-.984A4 4 0 0 1 15 4.788V2\" /> <path d=\"M7 15a6.472 6.472 0 0 1 5 0 6.47 6.47 0 0 0 5 0\" />", "monitor-smartphone": "<path d=\"M18 8V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h8\" /> <path d=\"M10 19v-3.96 3.15\" /> <path d=\"M7 19h5\" /> <rect width=\"6\" height=\"10\" x=\"16\" y=\"12\" rx=\"2\" />", "moon-star": "<path d=\"M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9\" /> <path d=\"M20 3v4\" /> <path d=\"M22 5h-4\" />", "music": "<path d=\"M9 18V5l12-2v13\" /> <circle cx=\"6\" cy=\"18\" r=\"3\" /> <circle cx=\"18\" cy=\"16\" r=\"3\" />", "package": "<path d=\"M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z\" /> <path d=\"M12 22V12\" /> <path d=\"m3.3 7 7.703 4.734a2 2 0 0 0 1.994 0L20.7 7\" /> <path d=\"m7.5 4.27 9 5.15\" />", "palette": "<circle cx=\"13.5\" cy=\"6.5\" r=\".5\" fill=\"currentColor\" /> <circle cx=\"17.5\" cy=\"10.5\" r=\".5\" fill=\"currentColor\" /> <circle cx=\"8.5\" cy=\"7.5\" r=\".5\" fill=\"currentColor\" /> <circle cx=\"6.5\" cy=\"12.5\" r=\".5\" fill=\"currentColor\" /> <path d=\"M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z\" />", "paw-print": "<circle cx=\"11\" cy=\"4\" r=\"2\" /> <circle cx=\"18\" cy=\"8\" r=\"2\" /> <circle cx=\"20\" cy=\"16\" r=\"2\" /> <path d=\"M9 10a5 5 0 0 1 5 5v3.5a3.5 3.5 0 0 1-6.84 1.045Q6.52 17.48 4.46 16.84A3.5 3.5 0 0 1 5.5 10Z\" />", "piggy-bank": "<path d=\"M19 5c-1.5 0-2.8 1.4-3 2-3.5-1.5-11-.3-11 5 0 1.8 0 3 2 4.5V20h4v-2h3v2h4v-4c1-.5 1.7-1 2-2h2v-4h-2c0-1-.5-1.5-1-2V5z\" /> <path d=\"M2 9v1c0 1.1.9 2 2 2h1\" /> <path d=\"M16 11h.01\" />", "plane": "<path d=\"M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z\" />", "puzzle": "<path d=\"M15.39 4.39a1 1 0 0 0 1.68-.474 2.5 2.5 0 1 1 3.014 3.015 1 1 0 0 0-.474 1.68l1.683 1.682a2.414 2.414 0 0 1 0 3.414L19.61 15.39a1 1 0 0 1-1.68-.474 2.5 2.5 0 1 0-3.014 3.015 1 1 0 0 1 .474 1.68l-1.683 1.682a2.414 2.414 0 0 1-3.414 0L8.61 19.61a1 1 0 0 0-1.68.474 2.5 2.5 0 1 1-3.014-3.015 1 1 0 0 0 .474-1.68l-1.683-1.682a2.414 2.414 0 0 1 0-3.414L4.39 8.61a1 1 0 0 1 1.68.474 2.5 2.5 0 1 0 3.014-3.015 1 1 0 0 1-.474-1.68l1.683-1.682a2.414 2.414 0 0 1 3.414 0z\" />", "rotate-ccw": "<path d=\"M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8\" /> <path d=\"M3 3v5h5\" />", "route": "<circle cx=\"6\" cy=\"19\" r=\"3\" /> <path d=\"M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15\" /> <circle cx=\"18\" cy=\"5\" r=\"3\" />", "salad": "<path d=\"M7 21h10\" /> <path d=\"M12 21a9 9 0 0 0 9-9H3a9 9 0 0 0 9 9Z\" /> <path d=\"M11.38 12a2.4 2.4 0 0 1-.4-4.77 2.4 2.4 0 0 1 3.2-2.77 2.4 2.4 0 0 1 3.47-.63 2.4 2.4 0 0 1 3.37 3.37 2.4 2.4 0 0 1-1.1 3.7 2.51 2.51 0 0 1 .03 1.1\" /> <path d=\"m13 12 4-4\" /> <path d=\"M10.9 7.25A3.99 3.99 0 0 0 4 10c0 .73.2 1.41.54 2\" />", "school": "<path d=\"M14 22v-4a2 2 0 1 0-4 0v4\" /> <path d=\"m18 10 3.447 1.724a1 1 0 0 1 .553.894V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-7.382a1 1 0 0 1 .553-.894L6 10\" /> <path d=\"M18 5v17\" /> <path d=\"m4 6 7.106-3.553a2 2 0 0 1 1.788 0L20 6\" /> <path d=\"M6 5v17\" /> <circle cx=\"12\" cy=\"9\" r=\"2\" />", "scroll-text": "<path d=\"M15 12h-5\" /> <path d=\"M15 8h-5\" /> <path d=\"M19 17V5a2 2 0 0 0-2-2H4\" /> <path d=\"M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3\" />", "search": "<circle cx=\"11\" cy=\"11\" r=\"8\" /> <path d=\"m21 21-4.3-4.3\" />", "shapes": "<path d=\"M8.3 10a.7.7 0 0 1-.626-1.079L11.4 3a.7.7 0 0 1 1.198-.043L16.3 8.9a.7.7 0 0 1-.572 1.1Z\" /> <rect x=\"3\" y=\"14\" width=\"7\" height=\"7\" rx=\"1\" /> <circle cx=\"17.5\" cy=\"17.5\" r=\"3.5\" />", "shield": "<path d=\"M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z\" />", "shopping-cart": "<circle cx=\"8\" cy=\"21\" r=\"1\" /> <circle cx=\"19\" cy=\"21\" r=\"1\" /> <path d=\"M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12\" />", "smartphone": "<rect width=\"14\" height=\"20\" x=\"5\" y=\"2\" rx=\"2\" ry=\"2\" /> <path d=\"M12 18h.01\" />", "smile": "<circle cx=\"12\" cy=\"12\" r=\"10\" /> <path d=\"M8 14s1.5 2 4 2 4-2 4-2\" /> <line x1=\"9\" x2=\"9.01\" y1=\"9\" y2=\"9\" /> <line x1=\"15\" x2=\"15.01\" y1=\"9\" y2=\"9\" />", "sparkles": "<path d=\"M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z\" /> <path d=\"M20 3v4\" /> <path d=\"M22 5h-4\" /> <path d=\"M4 17v2\" /> <path d=\"M5 18H3\" />", "sprout": "<path d=\"M7 20h10\" /> <path d=\"M10 20c5.5-2.5.8-6.4 3-10\" /> <path d=\"M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z\" /> <path d=\"M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z\" />", "stethoscope": "<path d=\"M11 2v2\" /> <path d=\"M5 2v2\" /> <path d=\"M5 3H4a2 2 0 0 0-2 2v4a6 6 0 0 0 12 0V5a2 2 0 0 0-2-2h-1\" /> <path d=\"M8 15a6 6 0 0 0 12 0v-3\" /> <circle cx=\"20\" cy=\"10\" r=\"2\" />", "store": "<path d=\"m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7\" /> <path d=\"M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8\" /> <path d=\"M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4\" /> <path d=\"M2 7h20\" /> <path d=\"M22 7v3a2 2 0 0 1-2 2a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12a2 2 0 0 1-2-2V7\" />", "sun": "<circle cx=\"12\" cy=\"12\" r=\"4\" /> <path d=\"M12 2v2\" /> <path d=\"M12 20v2\" /> <path d=\"m4.93 4.93 1.41 1.41\" /> <path d=\"m17.66 17.66 1.41 1.41\" /> <path d=\"M2 12h2\" /> <path d=\"M20 12h2\" /> <path d=\"m6.34 17.66-1.41 1.41\" /> <path d=\"m19.07 4.93-1.41 1.41\" />", "sunset": "<path d=\"M12 10V2\" /> <path d=\"m4.93 10.93 1.41 1.41\" /> <path d=\"M2 18h2\" /> <path d=\"M20 18h2\" /> <path d=\"m19.07 10.93-1.41 1.41\" /> <path d=\"M22 22H2\" /> <path d=\"m16 6-4 4-4-4\" /> <path d=\"M16 18a4 4 0 0 0-8 0\" />", "syringe": "<path d=\"m18 2 4 4\" /> <path d=\"m17 7 3-3\" /> <path d=\"M19 9 8.7 19.3c-1 1-2.5 1-3.4 0l-.6-.6c-1-1-1-2.5 0-3.4L15 5\" /> <path d=\"m9 11 4 4\" /> <path d=\"m5 19-3 3\" /> <path d=\"m14 4 6 6\" />", "tent": "<path d=\"M3.5 21 14 3\" /> <path d=\"M20.5 21 10 3\" /> <path d=\"M15.5 21 12 15l-3.5 6\" /> <path d=\"M2 21h20\" />", "toy-brick": "<rect width=\"18\" height=\"12\" x=\"3\" y=\"8\" rx=\"1\" /> <path d=\"M10 8V5c0-.6-.4-1-1-1H6a1 1 0 0 0-1 1v3\" /> <path d=\"M19 8V5c0-.6-.4-1-1-1h-3a1 1 0 0 0-1 1v3\" />", "train-front": "<path d=\"M8 3.1V7a4 4 0 0 0 8 0V3.1\" /> <path d=\"m9 15-1-1\" /> <path d=\"m15 15 1-1\" /> <path d=\"M9 19c-2.8 0-5-2.2-5-5v-4a8 8 0 0 1 16 0v4c0 2.8-2.2 5-5 5Z\" /> <path d=\"m8 19-2 3\" /> <path d=\"m16 19 2 3\" />", "trending-up": "<polyline points=\"22 7 13.5 15.5 8.5 10.5 2 17\" /> <polyline points=\"16 7 22 7 22 13\" />", "trophy": "<path d=\"M6 9H4.5a2.5 2.5 0 0 1 0-5H6\" /> <path d=\"M18 9h1.5a2.5 2.5 0 0 0 0-5H18\" /> <path d=\"M4 22h16\" /> <path d=\"M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22\" /> <path d=\"M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22\" /> <path d=\"M18 2H6v7a6 6 0 0 0 12 0V2Z\" />", "truck": "<path d=\"M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2\" /> <path d=\"M15 18H9\" /> <path d=\"M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14\" /> <circle cx=\"17\" cy=\"18\" r=\"2\" /> <circle cx=\"7\" cy=\"18\" r=\"2\" />", "tv": "<rect width=\"20\" height=\"15\" x=\"2\" y=\"7\" rx=\"2\" ry=\"2\" /> <polyline points=\"17 2 12 7 7 2\" />", "user-cog": "<circle cx=\"18\" cy=\"15\" r=\"3\" /> <circle cx=\"9\" cy=\"7\" r=\"4\" /> <path d=\"M10 15H6a4 4 0 0 0-4 4v2\" /> <path d=\"m21.7 16.4-.9-.3\" /> <path d=\"m15.2 13.9-.9-.3\" /> <path d=\"m16.6 18.7.3-.9\" /> <path d=\"m19.1 12.2.3-.9\" /> <path d=\"m19.6 18.7-.4-1\" /> <path d=\"m16.8 12.3-.4-1\" /> <path d=\"m14.3 16.6 1-.4\" /> <path d=\"m20.7 13.8 1-.4\" />", "users": "<path d=\"M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2\" /> <circle cx=\"9\" cy=\"7\" r=\"4\" /> <path d=\"M22 21v-2a4 4 0 0 0-3-3.87\" /> <path d=\"M16 3.13a4 4 0 0 1 0 7.75\" />", "users-round": "<path d=\"M18 21a8 8 0 0 0-16 0\" /> <circle cx=\"10\" cy=\"8\" r=\"5\" /> <path d=\"M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3\" />", "utensils": "<path d=\"M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2\" /> <path d=\"M7 2v20\" /> <path d=\"M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7\" />", "video": "<path d=\"m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5\" /> <rect x=\"2\" y=\"6\" width=\"14\" height=\"12\" rx=\"2\" />", "wallet": "<path d=\"M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1\" /> <path d=\"M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4\" />", "waves": "<path d=\"M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1\" /> <path d=\"M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1\" /> <path d=\"M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1\" />", "wifi": "<path d=\"M12 20h.01\" /> <path d=\"M2 8.82a15 15 0 0 1 20 0\" /> <path d=\"M5 12.859a10 10 0 0 1 14 0\" /> <path d=\"M8.5 16.429a5 5 0 0 1 7 0\" />", "wine": "<path d=\"M8 22h8\" /> <path d=\"M7 10h10\" /> <path d=\"M12 15v7\" /> <path d=\"M12 15a5 5 0 0 0 5-5c0-2-.5-4-2-8H9c-1.5 4-2 6-2 8a5 5 0 0 0 5 5Z\" />", "wrench": "<path d=\"M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z\" />", "x": "<path d=\"M18 6 6 18\" /> <path d=\"m6 6 12 12\" />", "zap": "<path d=\"M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z\" />"};
+const TRAITS = [{"id": "life", "parent": null, "domain": "life", "name_he": "שלב בחיים", "icon": "sprout", "tier": "S1"}, {"id": "life.baby_care", "parent": "life", "domain": "life", "name_he": "טיפול בתינוק", "icon": "baby", "tier": "S1"}, {"id": "life.daycare", "parent": "life", "domain": "life", "name_he": "מעון וגן", "icon": "blocks", "tier": "S1"}, {"id": "life.school", "parent": "life", "domain": "life", "name_he": "בית ספר", "icon": "school", "tier": "S1"}, {"id": "life.school.primary", "parent": "life.school", "domain": "life", "name_he": "יסודי", "icon": "backpack", "tier": "S1"}, {"id": "life.school.secondary", "parent": "life.school", "domain": "life", "name_he": "חטיבה ותיכון", "icon": "graduation-cap", "tier": "S1"}, {"id": "life.service", "parent": "life", "domain": "life", "name_he": "שירות", "icon": "shield", "tier": "S1"}, {"id": "life.service.idf", "parent": "life.service", "domain": "life", "name_he": "צבא", "icon": "medal", "tier": "S1"}, {"id": "life.service.national", "parent": "life.service", "domain": "life", "name_he": "שירות לאומי", "icon": "hand-heart", "tier": "S1"}, {"id": "life.higher_ed", "parent": "life", "domain": "life", "name_he": "לימודים אקדמיים", "icon": "book-open", "tier": "S0"}, {"id": "life.work", "parent": "life", "domain": "life", "name_he": "עבודה", "icon": "briefcase", "tier": "S1"}, {"id": "life.work.first_job", "parent": "life.work", "domain": "life", "name_he": "עבודה ראשונה", "icon": "coffee", "tier": "S1"}, {"id": "life.retirement", "parent": "life", "domain": "life", "name_he": "פרישה", "icon": "armchair", "tier": "S1"}, {"id": "life.infant", "parent": "life", "domain": "life", "name_he": "תינוקות ופעוטות", "icon": "baby", "tier": "S1"}, {"id": "life.infant.diapers", "parent": "life.infant", "domain": "life", "name_he": "חיתולים", "icon": "droplets", "tier": "S1"}, {"id": "life.infant.vaccines", "parent": "life.infant", "domain": "life", "name_he": "חיסוני טיפת חלב", "icon": "syringe", "tier": "S1"}, {"id": "life.infant.first_words", "parent": "life.infant", "domain": "life", "name_he": "מילים ראשונות", "icon": "message-circle-heart", "tier": "S1"}, {"id": "life.infant.walking", "parent": "life.infant", "domain": "life", "name_he": "זחילה והליכה", "icon": "footprints", "tier": "S1"}, {"id": "life.infant.sleep", "parent": "life.infant", "domain": "life", "name_he": "שגרת שינה", "icon": "moon-star", "tier": "S1"}, {"id": "life.infant.feeding", "parent": "life.infant", "domain": "life", "name_he": "הנקה ובקבוק", "icon": "milk", "tier": "S1"}, {"id": "life.infant.solids", "parent": "life.infant", "domain": "life", "name_he": "אוכל ראשון", "icon": "apple", "tier": "S1"}, {"id": "life.infant.toys_books", "parent": "life.infant", "domain": "life", "name_he": "צעצועים וספרי תינוקות", "icon": "toy-brick", "tier": "S0"}, {"id": "life.infant.pacifier", "parent": "life.infant", "domain": "life", "name_he": "מוצץ", "icon": "smile", "tier": "S0"}, {"id": "life.infant.attachment", "parent": "life.infant", "domain": "life", "name_he": "חרדת פרידה", "icon": "heart-handshake", "tier": "S1"}, {"id": "life.infant.tantrums", "parent": "life.infant", "domain": "life", "name_he": "התקפי זעם", "icon": "angry", "tier": "S1"}, {"id": "life.childhood", "parent": "life", "domain": "life", "name_he": "ילדות ונעורים", "icon": "shapes", "tier": "S0"}, {"id": "life.childhood.play", "parent": "life.childhood", "domain": "life", "name_he": "חברים ומשחק", "icon": "puzzle", "tier": "S0"}, {"id": "life.childhood.afterschool", "parent": "life.childhood", "domain": "life", "name_he": "חוגים", "icon": "drama", "tier": "S0"}, {"id": "life.childhood.summer_camp", "parent": "life.childhood", "domain": "life", "name_he": "קייטנה", "icon": "sun", "tier": "S0"}, {"id": "life.childhood.youth_movement", "parent": "life.childhood", "domain": "life", "name_he": "תנועת נוער", "icon": "flag", "tier": "S0"}, {"id": "life.childhood.bagrut", "parent": "life.childhood", "domain": "life", "name_he": "בגרויות", "icon": "scroll-text", "tier": "S1"}, {"id": "life.childhood.pocket_money", "parent": "life.childhood", "domain": "life", "name_he": "דמי כיס", "icon": "coins", "tier": "S1"}, {"id": "life.childhood.tsav_rishon", "parent": "life.childhood", "domain": "life", "name_he": "צו ראשון", "icon": "clipboard-list", "tier": "S1"}, {"id": "life.golden", "parent": "life", "domain": "life", "name_he": "גיל הזהב", "icon": "sunset", "tier": "S1"}, {"id": "life.golden.old_age_allowance", "parent": "life.golden", "domain": "life", "name_he": "קצבת זקנה", "icon": "hand-coins", "tier": "S2"}, {"id": "life.golden.senior_card", "parent": "life.golden", "domain": "life", "name_he": "תעודת אזרח ותיק", "icon": "badge-percent", "tier": "S1"}, {"id": "life.golden.free_transit", "parent": "life.golden", "domain": "life", "name_he": "תחבורה חינם", "icon": "bus-front", "tier": "S1"}, {"id": "life.golden.senior_club", "parent": "life.golden", "domain": "life", "name_he": "מועדון גמלאים", "icon": "messages-square", "tier": "S1"}, {"id": "life.golden.home_care", "parent": "life.golden", "domain": "life", "name_he": "מטפל בבית", "icon": "hand-helping", "tier": "S2"}, {"id": "life.golden.assisted_living", "parent": "life.golden", "domain": "life", "name_he": "דיור מוגן", "icon": "building", "tier": "S2"}, {"id": "family", "parent": null, "domain": "family", "name_he": "משפחה", "icon": "users", "tier": "S2"}, {"id": "family.partner", "parent": "family", "domain": "family", "name_he": "בזוגיות", "icon": "heart", "tier": "S2"}, {"id": "family.parent", "parent": "family", "domain": "family", "name_he": "הורה", "icon": "users-round", "tier": "S2"}, {"id": "family.parent.baby", "parent": "family.parent", "domain": "family", "name_he": "הורה לתינוק", "icon": "baby", "tier": "S2"}, {"id": "family.parent.preschool", "parent": "family.parent", "domain": "family", "name_he": "הורה לגן", "icon": "blocks", "tier": "S2"}, {"id": "family.parent.school", "parent": "family.parent", "domain": "family", "name_he": "הורה לתלמיד", "icon": "backpack", "tier": "S2"}, {"id": "family.parent.teen", "parent": "family.parent", "domain": "family", "name_he": "הורה למתבגר", "icon": "smartphone", "tier": "S2"}, {"id": "family.grandparent", "parent": "family", "domain": "family", "name_he": "סבא או סבתא", "icon": "hand-heart", "tier": "S2"}, {"id": "family.elder_care", "parent": "family", "domain": "family", "name_he": "טיפול בהורה", "icon": "stethoscope", "tier": "S2"}, {"id": "family.child", "parent": "family", "domain": "family", "name_he": "גר עם ההורים", "icon": "house", "tier": "S2"}, {"id": "family.sibling", "parent": "family", "domain": "family", "name_he": "אחים ואחיות", "icon": "users-round", "tier": "S2"}, {"id": "home", "parent": null, "domain": "home", "name_he": "בית", "icon": "house", "tier": "S1"}, {"id": "home.rent", "parent": "home", "domain": "home", "name_he": "שוכרי דירה", "icon": "key-round", "tier": "S2"}, {"id": "home.rent.roommates", "parent": "home.rent", "domain": "home", "name_he": "דירת שותפים", "icon": "users", "tier": "S2"}, {"id": "home.own", "parent": "home", "domain": "home", "name_he": "בעלי דירה", "icon": "house-plus", "tier": "S2"}, {"id": "home.own.mortgage", "parent": "home.own", "domain": "home", "name_he": "משכנתא", "icon": "landmark", "tier": "S2"}, {"id": "home.moving", "parent": "home", "domain": "home", "name_he": "מעבר דירה", "icon": "truck", "tier": "S1"}, {"id": "home.garden", "parent": "home", "domain": "home", "name_he": "גינה ועציצים", "icon": "sprout", "tier": "S0"}, {"id": "home.diy", "parent": "home", "domain": "home", "name_he": "שיפוצים ותיקונים", "icon": "hammer", "tier": "S0"}, {"id": "pets", "parent": null, "domain": "pets", "name_he": "חיות מחמד", "icon": "paw-print", "tier": "S1"}, {"id": "pets.dog", "parent": "pets", "domain": "pets", "name_he": "בעלי כלב", "icon": "dog", "tier": "S1"}, {"id": "pets.dog.large", "parent": "pets.dog", "domain": "pets", "name_he": "כלב גדול", "icon": "bone", "tier": "S1"}, {"id": "pets.dog.puppy", "parent": "pets.dog", "domain": "pets", "name_he": "גור כלבים", "icon": "heart", "tier": "S1"}, {"id": "pets.cat", "parent": "pets", "domain": "pets", "name_he": "בעלי חתול", "icon": "cat", "tier": "S1"}, {"id": "pets.other", "parent": "pets", "domain": "pets", "name_he": "חיות קטנות", "icon": "fish", "tier": "S1"}, {"id": "move", "parent": null, "domain": "move", "name_he": "תנועה ותחבורה", "icon": "route", "tier": "S0"}, {"id": "move.licence", "parent": "move", "domain": "move", "name_he": "רישיון נהיגה", "icon": "id-card", "tier": "S1"}, {"id": "move.car", "parent": "move", "domain": "move", "name_he": "בעלי רכב", "icon": "car", "tier": "S1"}, {"id": "move.cycling", "parent": "move", "domain": "move", "name_he": "רכיבה על אופניים", "icon": "bike", "tier": "S0"}, {"id": "move.cycling.ebike", "parent": "move.cycling", "domain": "move", "name_he": "אופניים וקורקינט חשמליים", "icon": "zap", "tier": "S0"}, {"id": "move.transit", "parent": "move", "domain": "move", "name_he": "תחבורה ציבורית", "icon": "bus", "tier": "S0"}, {"id": "move.transit.train", "parent": "move.transit", "domain": "move", "name_he": "נוסעי רכבת", "icon": "train-front", "tier": "S0"}, {"id": "move.fly", "parent": "move", "domain": "move", "name_he": "טסים לחו\"ל", "icon": "plane", "tier": "S1"}, {"id": "food", "parent": null, "domain": "food", "name_he": "אוכל ושתייה", "icon": "utensils", "tier": "S0"}, {"id": "food.coffee", "parent": "food", "domain": "food", "name_he": "קפה יומי", "icon": "coffee", "tier": "S0"}, {"id": "food.cooking", "parent": "food", "domain": "food", "name_he": "מבשלים בבית", "icon": "chef-hat", "tier": "S0"}, {"id": "food.baking", "parent": "food", "domain": "food", "name_he": "אופים בבית", "icon": "cake-slice", "tier": "S0"}, {"id": "food.delivery", "parent": "food", "domain": "food", "name_he": "הזמנת משלוחים", "icon": "package", "tier": "S0"}, {"id": "food.vegetarian", "parent": "food", "domain": "food", "name_he": "צמחונים", "icon": "leaf", "tier": "S0"}, {"id": "food.vegetarian.vegan", "parent": "food.vegetarian", "domain": "food", "name_he": "טבעונים", "icon": "sprout", "tier": "S0"}, {"id": "food.alcohol", "parent": "food", "domain": "food", "name_he": "יין ואלכוהול", "icon": "wine", "tier": "S1"}, {"id": "sport", "parent": null, "domain": "sport", "name_he": "ספורט וכושר", "icon": "medal", "tier": "S0"}, {"id": "sport.gym", "parent": "sport", "domain": "sport", "name_he": "חדר כושר", "icon": "dumbbell", "tier": "S0"}, {"id": "sport.running", "parent": "sport", "domain": "sport", "name_he": "ריצה", "icon": "activity", "tier": "S0"}, {"id": "sport.team", "parent": "sport", "domain": "sport", "name_he": "ספורט קבוצתי", "icon": "trophy", "tier": "S0"}, {"id": "sport.swimming", "parent": "sport", "domain": "sport", "name_he": "שחייה", "icon": "waves", "tier": "S0"}, {"id": "sport.yoga", "parent": "sport", "domain": "sport", "name_he": "יוגה ופילאטיס", "icon": "flower-2", "tier": "S0"}, {"id": "sport.walking", "parent": "sport", "domain": "sport", "name_he": "הליכה לכושר", "icon": "footprints", "tier": "S0"}, {"id": "hobby", "parent": null, "domain": "hobby", "name_he": "תחביבים", "icon": "sparkles", "tier": "S0"}, {"id": "hobby.gaming", "parent": "hobby", "domain": "hobby", "name_he": "גיימינג", "icon": "gamepad-2", "tier": "S0"}, {"id": "hobby.music", "parent": "hobby", "domain": "hobby", "name_he": "מוזיקה", "icon": "music", "tier": "S0"}, {"id": "hobby.music.playing", "parent": "hobby.music", "domain": "hobby", "name_he": "מנגנים", "icon": "guitar", "tier": "S0"}, {"id": "hobby.reading", "parent": "hobby", "domain": "hobby", "name_he": "קריאת ספרים", "icon": "book-open", "tier": "S0"}, {"id": "hobby.photography", "parent": "hobby", "domain": "hobby", "name_he": "צילום", "icon": "camera", "tier": "S0"}, {"id": "hobby.travel", "parent": "hobby", "domain": "hobby", "name_he": "טיולים בחו\"ל", "icon": "plane", "tier": "S0"}, {"id": "hobby.hiking", "parent": "hobby", "domain": "hobby", "name_he": "טיולי שטח", "icon": "tent", "tier": "S0"}, {"id": "hobby.crafts", "parent": "hobby", "domain": "hobby", "name_he": "יצירה ואמנות", "icon": "palette", "tier": "S0"}, {"id": "hobby.volunteering", "parent": "hobby", "domain": "hobby", "name_he": "התנדבות", "icon": "hand-heart", "tier": "S0"}, {"id": "tech", "parent": null, "domain": "tech", "name_he": "טכנולוגיה", "icon": "wifi", "tier": "S0"}, {"id": "tech.smartphone", "parent": "tech", "domain": "tech", "name_he": "סמארטפון", "icon": "smartphone", "tier": "S0"}, {"id": "tech.social_daily", "parent": "tech", "domain": "tech", "name_he": "רשתות חברתיות", "icon": "message-circle", "tier": "S0"}, {"id": "tech.online_shopping", "parent": "tech", "domain": "tech", "name_he": "קניות אונליין", "icon": "shopping-cart", "tier": "S0"}, {"id": "tech.streaming", "parent": "tech", "domain": "tech", "name_he": "צפייה בסטרימינג", "icon": "tv", "tier": "S0"}, {"id": "tech.video_calls", "parent": "tech", "domain": "tech", "name_he": "שיחות וידאו", "icon": "video", "tier": "S0"}, {"id": "tech.smart_home", "parent": "tech", "domain": "tech", "name_he": "בית חכם", "icon": "wifi", "tier": "S1"}, {"id": "work", "parent": null, "domain": "work", "name_he": "עבודה", "icon": "briefcase", "tier": "S1"}, {"id": "work.employed", "parent": "work", "domain": "work", "name_he": "מועסקים", "icon": "building-2", "tier": "S1"}, {"id": "work.employed.self_employed", "parent": "work.employed", "domain": "work", "name_he": "עצמאים", "icon": "store", "tier": "S2"}, {"id": "work.employed.manager", "parent": "work.employed", "domain": "work", "name_he": "מנהלים", "icon": "user-cog", "tier": "S1"}, {"id": "work.student_job", "parent": "work", "domain": "work", "name_he": "עבודה לצד לימודים", "icon": "backpack", "tier": "S1"}, {"id": "work.job_seeking", "parent": "work", "domain": "work", "name_he": "מחפשי עבודה", "icon": "search", "tier": "S2"}, {"id": "work.retired", "parent": "work", "domain": "work", "name_he": "גמלאים", "icon": "armchair", "tier": "S1"}, {"id": "money", "parent": null, "domain": "money", "name_he": "כסף", "icon": "wallet", "tier": "S2"}, {"id": "money.bank_account", "parent": "money", "domain": "money", "name_he": "חשבון בנק", "icon": "landmark", "tier": "S2"}, {"id": "money.bank_account.online", "parent": "money.bank_account", "domain": "money", "name_he": "בנקאות מקוונת", "icon": "monitor-smartphone", "tier": "S2"}, {"id": "money.credit_card", "parent": "money", "domain": "money", "name_he": "כרטיס אשראי", "icon": "credit-card", "tier": "S2"}, {"id": "money.saving", "parent": "money", "domain": "money", "name_he": "חיסכון", "icon": "piggy-bank", "tier": "S2"}, {"id": "money.saving.child_plan", "parent": "money.saving", "domain": "money", "name_he": "חיסכון לכל ילד", "icon": "baby", "tier": "S2"}, {"id": "money.saving.investing", "parent": "money.saving", "domain": "money", "name_he": "משקיעים בבורסה", "icon": "trending-up", "tier": "S2"}, {"id": "money.pension", "parent": "money", "domain": "money", "name_he": "חיסכון פנסיוני", "icon": "hourglass", "tier": "S2"}, {"id": "money.mortgage", "parent": "money", "domain": "money", "name_he": "משלמי משכנתא", "icon": "house", "tier": "S2"}, {"id": "health", "parent": null, "domain": "health", "name_he": "בריאות", "icon": "stethoscope", "tier": "S3"}];
+const HUES = {life:'#64D2FF',family:'#FF375F',home:'#C69C6D',pets:'#FF9F0A',move:'#0A84FF',food:'#30D158',sport:'#FF453A',hobby:'#BF5AF2',tech:'#5E5CE6',work:'#FFD60A',money:'#66D4CF',health:'#8E8E93'};
+const AMBER='#FFB340';
+const NS='http://www.w3.org/2000/svg';
+const el=(t,a={},p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e};
+const icon=k=>`<svg class="i" viewBox="0 0 24 24" aria-hidden="true">${ICONS[k]||ICONS['circle']||''}</svg>`;
+const qp=new URLSearchParams(location.search);
+const svg0=document.getElementById('viz');
+const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+const svg=svg0, panel=document.getElementById('panel'), dock=document.getElementById('dock');
+const TR={}; TRAITS.forEach(t=>TR[t.id]=t);
+const hueOf=id=>HUES[(TR[id]||{}).domain||String(id).split('.')[0]]||'#8E8E93';
+const trName=id=>(TR[id]||{}).name_he||id;
+const trTier=id=>(TR[id]||{}).tier||'S1';
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+// ---- fake data only (no real people). Every offer and need points at a branch in traits.json ----
+const OFFERS={
+  van:   {he:'ואן להובלות',     icon:'truck',      t:'home.moving'},
+  muscle:{he:'ידיים חזקות',     icon:'dumbbell',   t:'sport.gym'},
+  car:   {he:'רכב',             icon:'car',        t:'move.car'},
+  gan:   {he:'ילד באותו גן',    icon:'blocks',     t:'family.parent.preschool'},
+  dogsit:{he:'שמירה על כלבים',  icon:'dog',        t:'pets.dog'},
+  handy: {he:'ידיים טובות',     icon:'wrench',     t:'home.diy'},
+  cook:  {he:'בישול',           icon:'chef-hat',   t:'food.cooking'},
+  veg:   {he:'מטבח צמחוני',     icon:'leaf',       t:'food.vegetarian'},
+  bake:  {he:'אפייה',           icon:'cake',       t:'food.baking'},
+  photo: {he:'צילום',           icon:'camera',     t:'hobby.photography'},
+  run:   {he:'ריצת בוקר',       icon:'activity',   t:'sport.running'},
+  phone: {he:'עזרה עם הטלפון',  icon:'smartphone', t:'tech.smartphone'},
+};
+const ME={name:'נועה',age:34,offers:['car','bake','photo','run','phone']};
+const NEEDS=[
+  {id:'move', he:'מעבר דירה',          short:'מעבר דירה', icon:'truck',    t:'home.moving',             fits:['van','muscle'],      when:'שישי 8:00–12:00', shared:true},
+  {id:'gan',  he:'הסעה לגן',           short:'הסעה לגן',  icon:'blocks',   t:'family.parent.preschool', fits:['gan'],               when:'ראשון 7:45',      shared:true},
+  {id:'dog',  he:'טיפול בכלב בחופשה',  short:'כלב בחופשה',icon:'dog',      t:'pets.dog',                fits:['dogsit'],            when:'21–24 באוקטובר',  shared:true},
+  {id:'furn', he:'הרכבת רהיטים',       short:'רהיטים',    icon:'hammer',   t:'home.diy',                fits:['handy'],             when:'שבת בבוקר',       shared:true},
+  {id:'veg',  he:'מתכון צמחוני',       short:'מתכון',     icon:'salad',    t:'food.vegetarian',         fits:['veg','cook'],        when:'עד חמישי',        shared:true},
+  {id:'mort', he:'ייעוץ משכנתא',       short:'משכנתא',    icon:'landmark', t:'money.mortgage',          fits:[],                    when:'החודש',           shared:false},
+];
+const FRIENDS=[
+  {id:'yoav', name:'יואב', age:41,g:'m', offers:['van','handy'],        needs:[{id:'yoav-n', he:'טרמפ למוסך',        icon:'car',            fits:'car',   when:'שני 8:00'}]},
+  {id:'maya', name:'מאיה', age:29,g:'f', offers:['dogsit','veg'],       needs:[{id:'maya-n', he:'עוגה ליום הולדת',   icon:'cake',           fits:'bake',  when:'רביעי בערב'}]},
+  {id:'dani', name:'דני',  age:36,g:'m', offers:['car','gan'],          needs:[{id:'dani-n', he:'צילום מסיבת גן',     icon:'camera',         fits:'photo', when:'שישי 10:00'}]},
+  {id:'rotem',name:'רותם', age:52,g:'f', offers:['handy','cook'],       needs:[{id:'rotem-n',he:'הגדרת טלפון חדש',    icon:'smartphone',     fits:'phone', when:'מתי שנוח'}]},
+  {id:'omer', name:'עומר', age:24,g:'m', offers:['muscle','car'],       needs:[{id:'omer-n', he:'שותף לריצת בוקר',    icon:'activity',       fits:'run',   when:'שלישי 6:00'}]},
+  {id:'shira',name:'שירה', age:38,g:'f', offers:['veg','gan','cook'],   needs:[{id:'shira-n',he:'טרמפ לחוג',          icon:'car',            fits:'car',   when:'רביעי 16:30'}]},
+  {id:'avi',  name:'אבי',  age:67,g:'m', offers:['dogsit','handy'],     needs:[{id:'avi-n',  he:'עזרה עם וואטסאפ',    icon:'message-circle', fits:'phone', when:'אחר הצהריים'}]},
+];
+const FR={}; FRIENDS.forEach(f=>FR[f.id]=f);
+const ND={}; NEEDS.forEach(n=>ND[n.id]=n);
+const canHelp=(f,v)=>v.g==='f'?'אני יכולה לעזור':'אני יכול לעזור';
+const helped=f=>f.g==='f'?'עזרה':'עזר';
+const DAYS=['ראשון','שני','שלישי','רביעי','חמישי','שישי','שבת'];
+
+// ---- state ----
+let selNeed=null, selFriend=null, pending=null, links=[], hintOverride=null, nextId=1;
+const tally={gave:0,got:0};
+const resolved={};               // needId or friend-need id -> {by, day}
+let dayIdx=-1;
+const history=[
+  {dir:'in', who:'rotem', text:'רותם תיקנה את הברז במטבח', when:'לפני שבוע', t:'home.diy'},
+  {dir:'out',who:'omer',  text:'הסעת את עומר לרכבת',      when:'לפני 10 ימים', t:'move.car'},
+];
+history.push({dir:'consent',seed:1,text:'שיתפת במפורש עם השבט: הסעה לגן (S2 · הורה לגן)',when:'לפני שבועיים'}); history.forEach(x=>x.seed=1); // S2 share changes are consent-ledger rows in the same timeline
+const matches=n=>n&&n.shared&&!resolved[n.id]?FRIENDS.filter(f=>f.offers.some(o=>n.fits.includes(o))):[];
+const offerFor=(f,n)=>OFFERS[f.offers.find(o=>n.fits.includes(o))];
+
+// ---- geometry ----
+const narrow=()=>matchMedia('(max-width:600px)').matches;
+let G;
+function geo(){ const n=narrow(); G={n, CX:500, H:n?1180:1050, CY:n?532:492, RN:n?196:178, RF:n?384:384, rN:n?42:28, rF:n?52:39, rMe:n?70:62, f:n?2.1:1.15};
+  svg.setAttribute('viewBox',`0 0 1000 ${G.H}`);
+  const off=360/14;
+  FRIENDS.forEach((fr,i)=>{ const a=(off+i*360/7)*Math.PI/180; fr.x=G.CX+G.RF*Math.sin(a); fr.y=G.CY-G.RF*Math.cos(a); fr.a=a; });
+  NEEDS.forEach((nd,i)=>{ const a=((i+1)*360/7)*Math.PI/180; /* needs sit in the gaps between friends, so links never cross a node */ nd.x=G.CX+G.RN*Math.sin(a); nd.y=G.CY-G.RN*Math.cos(a); nd.a=a; });
+}
+geo();
+
+// ---- persistent SVG ----
+const defs=el('defs',{},svg);
+const soft=el('filter',{id:'soft',x:'-100%',y:'-100%',width:'300%',height:'300%'},defs); el('feGaussianBlur',{stdDeviation:'12'},soft);
+const orbitF=el('circle',{class:'orbit'},svg), orbitN=el('circle',{class:'orbit'},svg);
+const edgeG=el('g',{},svg), linkG=el('g',{},svg), nodeG=el('g',{},svg), labelG=el('g',{},svg), topG=el('g',{},svg);
+const setIcon=(g,k)=>{ g.innerHTML=ICONS[k]||ICONS['circle']||''; };
+const placeIcon=(g,x,y,sz)=>g.setAttribute('transform',`translate(${(x-sz/2).toFixed(1)} ${(y-sz/2).toFixed(1)}) scale(${(sz/24).toFixed(3)})`);
+const iconG=(p,stroke='#fff')=>el('g',{fill:'none',stroke,'stroke-width':2,'stroke-linecap':'round','stroke-linejoin':'round'},p);
+function onTap(g,fn,label){ g.setAttribute('tabindex',0); g.setAttribute('role','button'); if(label) g.setAttribute('aria-label',label);
+  g.addEventListener('click',e=>{e.stopPropagation(); stopSim(); fn();});
+  g.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); stopSim(); fn(); } }); }
+
+// me
+const meG=el('g',{class:'n'},nodeG);
+const meGlow=el('circle',{fill:'#0A84FF',opacity:.32,filter:'url(#soft)'},meG);
+const meDisc=el('circle',{fill:'#0A84FF'},meG);
+const meName=el('text',{'text-anchor':'middle','font-weight':700,fill:'#fff'},meG); meName.textContent=ME.name;
+const meSub=el('text',{'text-anchor':'middle','font-weight':500,fill:'rgba(255,255,255,.78)'},meG); meSub.textContent=ME.age+' · אני';
+onTap(meG,()=>{ selNeed=null; selFriend=null; hintOverride=null; sync(); },'נועה, אני. ניקוי בחירה');
+
+// needs
+NEEDS.forEach(n=>{
+  const hue=hueOf(n.t);
+  n.edge=el('path',{fill:'none','stroke-linecap':'round'},edgeG);
+  const g=el('g',{class:'n need','data-need':n.id},nodeG);
+  n.v={g, halo:el('circle',{fill:hue,filter:'url(#soft)'},g), ring:el('circle',{class:'ring',fill:'none'},g), disc:el('circle',{},g), ic:iconG(g,hue),
+       badge:el('g',{},g), lbl:el('text',{class:'lbl','text-anchor':'middle'},g), sub:el('text',{class:'sub','text-anchor':'middle'},g)};
+  setIcon(n.v.ic,n.icon);
+  n.v.bc=el('circle',{fill:'#16161C'},n.v.badge); n.v.bi=iconG(n.v.badge,'#fff');
+  n.s={lit:0,dim:0,sel:0,priv:n.shared?0:1,done:0};
+  onTap(g,()=>selectNeed(n.id),'הצורך שלי: '+n.he);
+});
+
+// friends
+FRIENDS.forEach(f=>{
+  const g=el('g',{class:'n friend','data-friend':f.id},nodeG);
+  const v={g, halo:el('circle',{filter:'url(#soft)'},g), ring:el('circle',{class:'ring',fill:'none'},g), disc:el('circle',{fill:'#2C2C2E'},g),
+    ini:el('text',{'text-anchor':'middle','font-weight':700,fill:'#fff'},g), name:el('text',{class:'lbl','text-anchor':'middle'},g), chips:[]};
+  v.ini.textContent=f.name[0]; v.name.textContent=`${f.name}, ${f.age}`;
+  f.offers.forEach(o=>{ const cg=el('g',{},g), c=el('circle',{fill:hueOf(OFFERS[o].t)},cg), ic=iconG(cg,'#fff'); setIcon(ic,OFFERS[o].icon); v.chips.push({o,cg,c,ic}); });
+  onTap(g,()=>tapFriend(f.id),`${f.name}, ${f.age}. מציע${f.g==='f'?'ה':''}: ${f.offers.map(o=>OFFERS[o].he).join(', ')}`);
+  // the friend's own shared need: hollow amber chip
+  const nd=f.needs[0], ng=el('g',{class:'n fneed','data-fneed':nd.id},nodeG);
+  v.nRing=el('circle',{fill:'#16161C',stroke:AMBER},ng); v.nIc=iconG(ng,AMBER); setIcon(v.nIc,nd.icon);
+  v.nPulse=el('circle',{fill:'none',stroke:AMBER,'pointer-events':'none'},ng);
+  onTap(ng,()=>helpFriend(f.id),`${f.name} צריך${f.g==='f'?'ה':''}: ${nd.he}. אני יכולה לעזור`);
+  // offer bubble ("I can help")
+  const b=el('g',{class:'bub','data-offer':f.id,opacity:0},topG);
+  v.bRect=el('rect',{fill:'#fff'},b); v.bIc=iconG(b,'#000'); v.bTxt=el('text',{'text-anchor':'middle','font-weight':600,fill:'#000'},b); v.bTxt.textContent=canHelp(null,f);
+  v.bTail=el('path',{fill:'#fff'},b); v.b=b;
+  b.addEventListener('click',e=>{ e.stopPropagation(); if(+b.getAttribute('opacity')>.3){ stopSim(); takeOffer(f.id); } });
+  f.v=v; f.s={lit:0,dim:0,bub:0,sel:0,ndone:0,nlit:0};
+});
+svg.addEventListener('click',()=>{ if(pending) return; stopSim(); selNeed=null; selFriend=null; hintOverride=null; sync(); });
+
+function measure(){ FRIENDS.forEach(f=>{ const v=f.v; v.bTxt.setAttribute('font-size',13.5*G.f); v.bw=(v.bTxt.getComputedTextLength()||90)+ (34*G.f); }); }
+
+// ---- links (temporary by design) ----
+function makeLink(kind,friendId,need){
+  const L={id:nextId++,kind,friend:friendId,need,state:'pending',t0:performance.now(),dur:+qp.get('ttl')||20000,k:0,op:0};
+  const hue=kind==='in'?hueOf(need.t):AMBER; L.hue=hue;
+  const g=el('g',{class:'lk'},linkG);
+  L.v={g, glow:el('path',{fill:'none',stroke:hue,'stroke-linecap':'round',filter:'url(#soft)'},g), base:el('path',{fill:'none',stroke:hue,'stroke-linecap':'round'},g),
+       cd:el('path',{fill:'none',stroke:'#fff','stroke-linecap':'round'},g), dots:[0,1,2].map(()=>el('circle',{fill:'#fff'},g)),
+       tg:el('g',{class:'lk','pointer-events':'none'},labelG)}; L.v.pill=el('rect',{fill:'rgba(14,14,20,.82)',stroke:'rgba(255,255,255,.1)'},L.v.tg); L.v.lbl=el('text',{class:'lbl','text-anchor':'middle'},L.v.tg); L.v.sub=el('text',{class:'sub','text-anchor':'middle'},L.v.tg);
+  links.push(L); return L;
+}
+function trim(ax,ay,bx,by,ra,rb){ const dx=bx-ax,dy=by-ay,d=Math.hypot(dx,dy)||1; return [ax+dx/d*ra,ay+dy/d*ra,bx-dx/d*rb,by-dy/d*rb]; }
+function needChipPos(f){ const r=G.rF*.98; return {x:f.x+(f.x>G.CX+1?1:-1)*r*.76, y:f.y-r*.76}; }
+const fmt=ms=>{ const s=Math.max(0,Math.ceil(ms/1000)); return Math.floor(s/60)+':'+String(s%60).padStart(2,'0'); };
+function polar(a,r){ return [G.CX+r*Math.sin(a), G.CY-r*Math.cos(a)]; }
+function linkPts(L){ const f=FR[L.friend];
+  if(L.kind==='out'){ const a=polar(f.a,G.rMe+6), b=polar(f.a,G.RF-G.rF*1.1-6), o=[]; for(let i=0;i<=32;i++){ const t=i/32; o.push([a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t]); } return o; }
+  const n=L.need, a0=f.a, da=((n.a-a0)%(2*Math.PI)+3*Math.PI)%(2*Math.PI)-Math.PI, r0=G.RF-G.rF*1.1-6, r1=G.RN+G.rN+8, pts=[];
+  for(let i=0;i<=32;i++){ const t=i/32, e=t*t*(3-2*t); pts.push(polar(a0+da*e, r0+(r1-r0)*(1-Math.pow(1-t,1.7)))); } /* dive inward first, clear of the friend's name and chips */ return pts; }
+function bestT(P){ // label goes where it collides least with nodes (labels are wide, so x counts less)
+  const C=[[G.CX,G.CY]].concat(NEEDS.map(n=>[n.x,n.y]),NEEDS.map(n=>[n.x,n.y+G.rN+18*G.f]),FRIENDS.map(f=>[f.x,f.y]),FRIENDS.map(f=>[f.x,f.y+G.rF+32*G.f])); let best=16,bs=-1;
+  for(let i=6;i<=26;i++){ const p=P[i]; let m=1e9; C.forEach(c=>{ m=Math.min(m,Math.hypot((p[0]-c[0])/2.2,p[1]-c[1])); }); const sc=m-Math.abs(i-16)*1.5; if(sc>bs){bs=sc;best=i;} } return best; }
+function drawLink(L,now){
+  const P=linkPts(L), d='M'+P.map(p=>p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' L ');
+  if(L._g!==G){ L._g=G; L._bi=bestT(P); } const lp=P[L._bi];
+  const v=L.v; [v.glow,v.base,v.cd].forEach(p=>p.setAttribute('d',d));
+  const target=L.state==='dissolve'?0:1; L.op+=(target-L.op)*(reduce?1:.12);
+  const len=v.base.getTotalLength(), w=4.5*Math.min(1.4,G.f*.85);
+  let frac=1, sub='';
+  if(L.state==='pending'){ v.base.setAttribute('stroke-dasharray',`${6*G.f} ${9*G.f}`); v.base.setAttribute('stroke-dashoffset',reduce?0:(-(now/40)%(15*G.f)).toFixed(1));
+    v.base.setAttribute('stroke-opacity',(.85*L.op).toFixed(2)); v.glow.setAttribute('stroke-opacity',0); v.cd.setAttribute('stroke-opacity',0); sub='מחכה לאישור'; }
+  else if(L.state==='active'){ const left=L.dur-(now-L.t0); frac=Math.max(0,left/L.dur);
+    v.base.removeAttribute('stroke-dasharray'); v.base.setAttribute('stroke-opacity',(.55*L.op).toFixed(2)); v.glow.setAttribute('stroke-opacity',(.45*L.op).toFixed(2));
+    v.cd.setAttribute('stroke-dasharray',`${(len*frac).toFixed(1)} ${len.toFixed(1)}`); v.cd.setAttribute('stroke-opacity',(.9*L.op).toFixed(2));
+    sub=(G.n?'':'קישור זמני · ')+'מתפוגג בעוד '+fmt(left); if(left<=0) dissolve(L); }
+  else { L.k=Math.min(1,(now-L.tD)/1400); const k=L.k;
+    v.base.setAttribute('stroke-dasharray',`${(2+10*(1-k)).toFixed(1)} ${(4+26*k).toFixed(1)}`); v.base.setAttribute('stroke-opacity',(.6*(1-k)).toFixed(2));
+    v.glow.setAttribute('stroke-opacity',(.35*(1-k)).toFixed(2)); v.cd.setAttribute('stroke-opacity',0); sub='תודה · הקישור התפוגג';
+    if(k>=1){ v.g.remove(); v.tg.remove(); links=links.filter(x=>x!==L); } }
+  v.base.setAttribute('stroke-width',w); v.glow.setAttribute('stroke-width',w*3); v.cd.setAttribute('stroke-width',w*.5);
+  v.dots.forEach((c,i)=>{ const on=L.state==='active'; const t=reduce?.5:((now/1600+i/3)%1); const p=v.base.getPointAtLength(len*t);
+    c.setAttribute('cx',p.x.toFixed(1)); c.setAttribute('cy',p.y.toFixed(1)); c.setAttribute('r',(2.6*G.f).toFixed(1)); c.setAttribute('opacity',on?(Math.sin(Math.PI*t)*.9*L.op).toFixed(2):0); });
+  const lx=lp[0], ly=lp[1];
+  const name=L.kind==='in'?(G.n?L.need.short:L.need.he):L.need.he;
+  v.lbl.textContent=`${name} · ${L.need.when}`; v.sub.textContent=sub;
+  const lf=G.n?G.f*.86:G.f; v.lbl.setAttribute('font-size',13.5*lf); v.lbl.setAttribute('stroke-width',5*G.f); v.sub.setAttribute('font-size',11.5*lf); v.sub.setAttribute('stroke-width',4*G.f);
+  v.lbl.setAttribute('x',lx.toFixed(1)); v.lbl.setAttribute('y',(ly-4*G.f).toFixed(1)); v.sub.setAttribute('x',lx.toFixed(1)); v.sub.setAttribute('y',(ly+12*G.f).toFixed(1));
+  const lo=L.state==='dissolve'?(1-L.k):L.op; v.lbl.setAttribute('opacity',lo.toFixed(2)); v.sub.setAttribute('opacity',lo.toFixed(2));
+  const key=v.lbl.textContent+'|'+v.sub.textContent.length+'|'+G.f; if(v._k!==key){ v._k=key; v._w=Math.max(v.lbl.getComputedTextLength(),v.sub.getComputedTextLength()); }
+  const pw=v._w+20*G.f, ph=38*G.f; v.pill.setAttribute('x',(lx-pw/2).toFixed(1)); v.pill.setAttribute('y',(ly-19*G.f).toFixed(1)); v.pill.setAttribute('width',pw.toFixed(1)); v.pill.setAttribute('height',ph.toFixed(1)); v.pill.setAttribute('rx',(ph/2.4).toFixed(1)); v.pill.setAttribute('opacity',(lo*.95).toFixed(2));
+}
+function dissolve(L){ if(L.state==='dissolve') return; L.state='dissolve'; L.tD=performance.now(); const f=FR[L.friend], day=dayIdx>=0?'יום '+DAYS[dayIdx]:'השבוע';
+  if(L.kind==='in'){ resolved[L.need.id]={by:f.id,day}; tally.got++; history.unshift({dir:'in',who:f.id,text:`${f.name} ${helped(f)}: ${L.need.he}`,when:`${day} · ${L.need.when}`,t:L.need.t}); bump(1); }
+  else { resolved[L.need.id]={by:'me',day}; tally.gave++; history.unshift({dir:'out',who:f.id,text:`עזרת ל${f.name}: ${L.need.he}`,when:`${day} · ${L.need.when}`,t:OFFERS[L.need.fits].t}); bump(0); }
+  renderTally(); renderPanel(); }
+
+// ---- actions ----
+function selectNeed(id){ if(pending) cancel(); const n=ND[id]; selFriend=null; hintOverride=null; selNeed=(selNeed===id)?null:id; sync(); }
+function tapFriend(id){ const n=ND[selNeed]; if(n&&matches(n).some(f=>f.id===id)&&!pending) return takeOffer(id); if(pending) cancel(); selFriend=selFriend===id?null:id; selNeed=null; sync(); }
+function takeOffer(fid){ const n=ND[selNeed]; if(!n) return; if(pending) cancel(); const L=makeLink('in',fid,n); pending=L; selFriend=fid; sync(); }
+function helpFriend(fid){ const f=FR[fid], nd=f.needs[0]; if(resolved[nd.id]||links.some(l=>l.need===nd)) { selFriend=fid; selNeed=null; sync(); return; }
+  if(pending) cancel(); selNeed=null; const L=makeLink('out',fid,nd); pending=L; selFriend=fid; sync(); }
+function confirmPending(){ if(!pending) return; const L=pending; L.state='active'; L.t0=performance.now(); if(sim) L.dur=sim.ttl; pending=null; selNeed=null; sync(); }
+function cancel(){ if(!pending) return; const L=pending; pending=null; L.v.g.remove(); L.v.tg.remove(); links=links.filter(x=>x!==L); sync(); }
+function toggleShare(id){ const n=ND[id]; n.shared=!n.shared; const s2=trTier(n.t)==='S2';
+  if(s2) history.unshift({dir:'consent',when:'עכשיו',text:n.shared?`שיתפת במפורש עם השבט: ${n.he} (S2 · ${trName(n.t)})`:`הפסקת לשתף: ${n.he}`});
+  if(!n.shared&&pending&&pending.need===n) cancel(); sync(); }
+window.addEventListener('keydown',e=>{ if(e.key==='Escape'){ if(pending) cancel(); else { selNeed=null; selFriend=null; sync(); } } });
+
+// ---- frame loop: every element interpolates toward its target ----
+function targets(){
+  const n=ND[selNeed], M=matches(n).map(f=>f.id), act=new Set(links.filter(l=>l.state!=='dissolve').map(l=>l.friend));
+  FRIENDS.forEach(f=>{ const m=M.includes(f.id); f.T={lit:m||act.has(f.id)?1:0, dim:(n&&!m&&!act.has(f.id))||(selFriend&&selFriend!==f.id&&!act.has(f.id)&&!n)?1:0,
+    bub:m&&(!pending||pending.friend!==f.id)?1:0, sel:selFriend===f.id?1:0, ndone:resolved[f.needs[0].id]?1:0}; });
+  NEEDS.forEach(x=>{ x.T={sel:selNeed===x.id?1:0, dim:(n&&selNeed!==x.id)||(selFriend&&!(pending&&pending.need===x))?1:0, priv:x.shared?0:1, done:resolved[x.id]?1:0}; });
+}
+const ease=(s,t,k)=>{ let mv=false; for(const p in t){ const d=t[p]-s[p]; if(Math.abs(d)>.002) mv=true; s[p]+=d*k; } return mv; };
+function frame(now){
+  targets(); const k=reduce?1:.14, f=G.f, CX=G.CX, CY=G.CY;
+  orbitF.setAttribute('cx',CX); orbitF.setAttribute('cy',CY); orbitF.setAttribute('r',G.RF); orbitN.setAttribute('cx',CX); orbitN.setAttribute('cy',CY); orbitN.setAttribute('r',G.RN); orbitN.setAttribute('opacity',.6);
+  // me
+  const breathe=reduce?0:Math.sin(now/1400)*1.5;
+  meGlow.setAttribute('cx',CX); meGlow.setAttribute('cy',CY); meGlow.setAttribute('r',G.rMe+10+breathe);
+  meDisc.setAttribute('cx',CX); meDisc.setAttribute('cy',CY); meDisc.setAttribute('r',G.rMe);
+  meName.setAttribute('x',CX); meName.setAttribute('y',CY+3*f); meName.setAttribute('font-size',22*f);
+  meSub.setAttribute('x',CX); meSub.setAttribute('y',CY+21*f); meSub.setAttribute('font-size',12*f);
+  // needs: my small tree
+  NEEDS.forEach(n=>{ ease(n.s,n.T,k); const s=n.s, v=n.v, hue=hueOf(n.t), r=G.rN*(1+.16*s.sel), op=1-.55*s.dim;
+    const [ax,ay,bx,by]=trim(CX,CY,n.x,n.y,G.rMe,r); const mx=(ax+bx)/2,my=(ay+by)/2;
+    n.edge.setAttribute('d',`M${ax.toFixed(1)} ${ay.toFixed(1)} Q ${(mx-(by-ay)*.08).toFixed(1)} ${(my+(bx-ax)*.08).toFixed(1)} ${bx.toFixed(1)} ${by.toFixed(1)}`);
+    n.edge.setAttribute('stroke',s.priv>.5?'#8E8E93':hue); n.edge.setAttribute('stroke-width',(2.5+2*s.sel)*Math.min(1.5,f*.8)); n.edge.setAttribute('stroke-opacity',((.42+.4*s.sel)*op*(1-.5*s.done)).toFixed(2));
+    n.edge.setAttribute('stroke-dasharray',s.priv>.5?`${3*f} ${6*f}`:'none');
+    v.halo.setAttribute('cx',n.x); v.halo.setAttribute('cy',n.y); v.halo.setAttribute('r',r*1.15); v.halo.setAttribute('opacity',((.18+.5*s.sel)*(1-s.priv)*op*(1-s.done*.7)).toFixed(2));
+    v.disc.setAttribute('cx',n.x); v.disc.setAttribute('cy',n.y); v.disc.setAttribute('r',r);
+    v.disc.setAttribute('fill',s.done>.5?hue:'#14141A'); v.disc.setAttribute('fill-opacity',s.done>.5?.32:1);
+    v.disc.setAttribute('stroke',s.priv>.5?'#8E8E93':hue); v.disc.setAttribute('stroke-width',2.5*Math.min(1.5,f*.85)); v.disc.setAttribute('stroke-dasharray',s.priv>.5?`${4*f} ${4*f}`:'none');
+    v.ring.setAttribute('cx',n.x); v.ring.setAttribute('cy',n.y); v.ring.setAttribute('r',r+7*f); v.ring.setAttribute('stroke','#fff'); v.ring.setAttribute('stroke-width',1.5*f); v.ring.setAttribute('stroke-opacity',(.75*s.sel).toFixed(2));
+    v.g.setAttribute('opacity',op.toFixed(2));
+    const isz=r*.95; placeIcon(v.ic,n.x,n.y,isz); v.ic.setAttribute('stroke',s.priv>.5?'#AEAEB2':hue);
+    // badge: lock (private) or check (done)
+    const bx2=n.x+r*.72, by2=n.y-r*.72, br=9*Math.min(1.6,f*.9); const showB=s.priv>.5||s.done>.5;
+    v.bc.setAttribute('cx',bx2); v.bc.setAttribute('cy',by2); v.bc.setAttribute('r',br); v.bc.setAttribute('stroke',s.done>.5?'#30D158':'#8E8E93'); v.bc.setAttribute('stroke-width',1.5);
+    setBadge(v,s.done>.5?'check':'lock'); placeIcon(v.bi,bx2,by2,br*1.2); v.bi.setAttribute('stroke',s.done>.5?'#30D158':'#fff'); v.badge.setAttribute('opacity',showB?1:0);
+    const ly=n.y+r+17*f; v.lbl.setAttribute('x',n.x); v.lbl.setAttribute('y',ly); v.lbl.setAttribute('font-size',13.5*f); v.lbl.setAttribute('stroke-width',4.5*f);
+    v.lbl.textContent=G.n?n.short:n.he;
+    v.sub.setAttribute('x',n.x); v.sub.setAttribute('y',ly+15*f); v.sub.setAttribute('font-size',11.5*f); v.sub.setAttribute('stroke-width',4*f);
+    const lk=links.find(l=>l.need===n&&l.state!=='dissolve');
+    v.sub.textContent=s.done>.5?'נפתר · תודה ל'+(FR[resolved[n.id]&&resolved[n.id].by]||{name:''}).name:s.priv>.5?'פרטי · רק אני':lk?'מקושר · '+FR[lk.friend].name:n.when;
+    v.sub.setAttribute('opacity',Math.max(s.sel,s.priv,s.done,lk?1:0).toFixed(2));
+  });
+  // friends
+  const n=ND[selNeed];
+  FRIENDS.forEach(fr=>{ ease(fr.s,fr.T,k); const s=fr.s, v=fr.v, hue=n?hueOf(n.t):(pending&&pending.friend===fr.id?pending.hue:'#fff');
+    const lkHue=(links.find(l=>l.friend===fr.id&&l.state!=='dissolve')||{}).hue, h2=s.lit>.01&&!n&&lkHue?lkHue:hue;
+    const r=G.rF*(1+.1*s.lit+.06*s.sel), op=1-.62*s.dim;
+    v.g.setAttribute('opacity',op.toFixed(2));
+    v.halo.setAttribute('cx',fr.x); v.halo.setAttribute('cy',fr.y); v.halo.setAttribute('r',r*1.25); v.halo.setAttribute('fill',h2); v.halo.setAttribute('opacity',(.5*s.lit).toFixed(2));
+    v.ring.setAttribute('cx',fr.x); v.ring.setAttribute('cy',fr.y); v.ring.setAttribute('r',r+5*f); v.ring.setAttribute('stroke',s.lit>.05?h2:'#fff'); v.ring.setAttribute('stroke-width',2*f);
+    v.ring.setAttribute('stroke-opacity',Math.max(.85*s.lit,.9*s.sel,.14).toFixed(2));
+    v.disc.setAttribute('cx',fr.x); v.disc.setAttribute('cy',fr.y); v.disc.setAttribute('r',r);
+    v.ini.setAttribute('x',fr.x); v.ini.setAttribute('y',fr.y+8*f); v.ini.setAttribute('font-size',23*f);
+    v.name.setAttribute('x',fr.x); v.name.setAttribute('y',fr.y+r+20*f); v.name.setAttribute('font-size',14.5*f); v.name.setAttribute('stroke-width',4.5*f);
+    const cr=11.5*f, gap=cr*2.5, n0=v.chips.length, cy=fr.y+r+20*f+22*f;
+    v.chips.forEach((c,i)=>{ const cx=fr.x+(i-(n0-1)/2)*gap*-1; const hit=n&&n.fits.includes(c.o);
+      c.c.setAttribute('cx',cx); c.c.setAttribute('cy',cy); c.c.setAttribute('r',cr*(1+.22*(hit?s.lit:0))); placeIcon(c.ic,cx,cy,cr*1.15);
+      c.cg.setAttribute('opacity',(n&&!hit?.35:1).toFixed(2)); });
+    // friend's need chip (hollow = need)
+    const p=needChipPos(fr), nr=13*Math.min(1.6,f*.9), pulse=reduce?0:(now/1800)%1;
+    v.nRing.setAttribute('cx',p.x); v.nRing.setAttribute('cy',p.y); v.nRing.setAttribute('r',nr); v.nRing.setAttribute('stroke-width',2);
+    v.nRing.setAttribute('stroke',s.ndone>.5?'#30D158':AMBER); setIconOnce(v,'n',s.ndone>.5?'check':fr.needs[0].icon); v.nIc.setAttribute('stroke',s.ndone>.5?'#30D158':AMBER); placeIcon(v.nIc,p.x,p.y,nr*1.15);
+    v.nPulse.setAttribute('cx',p.x); v.nPulse.setAttribute('cy',p.y); v.nPulse.setAttribute('r',nr+pulse*10*f); v.nPulse.setAttribute('stroke-opacity',s.ndone>.5||n?0:((1-pulse)*.5).toFixed(2));
+    v.nRing.parentNode.setAttribute('opacity',(op*(n?.35:1)).toFixed(2));
+    // bubble
+    const bw=v.bw||120, bh=30*f, bx=Math.max(bw/2+8,Math.min(1000-bw/2-8,fr.x)), below=fr.y>G.CY+60;
+    const by=below?cy+cr+12*f+bh/2+(1-s.bub)*8:fr.y-r-14*f-bh/2-(1-s.bub)*8;
+    v.bRect.setAttribute('x',bx-bw/2); v.bRect.setAttribute('y',by-bh/2); v.bRect.setAttribute('width',bw); v.bRect.setAttribute('height',bh); v.bRect.setAttribute('rx',bh/2);
+    const ty=below?by-bh/2+1:by+bh/2-1, tt=below?by-bh/2-7*f:by+bh/2+7*f; v.bTail.setAttribute('d',`M${fr.x-6*f} ${ty} L ${fr.x} ${tt} L ${fr.x+6*f} ${ty} Z`);
+    const off=n?offerFor(fr,n):null; if(off) setIconOnce(v,'b',off.icon);
+    placeIcon(v.bIc,bx+bw/2-12*f-6*f,by,15*f); v.bTxt.setAttribute('x',bx-9*f); v.bTxt.setAttribute('y',by+5*f);
+    v.b.setAttribute('opacity',s.bub.toFixed(2)); v.b.style.pointerEvents=s.bub>.5?'auto':'none';
+  });
+  links.slice().forEach(L=>drawLink(L,now));
+  updateCountdowns(now);
+  requestAnimationFrame(frame);
+}
+function setBadge(v,k){ if(v._b!==k){ v._b=k; setIcon(v.bi,k); } }
+function setIconOnce(v,slot,k){ const key='_'+slot; if(v[key]!==k){ v[key]=k; setIcon(slot==='n'?v.nIc:v.bIc,k); } }
+
+// ---- dock: hint or coordination card ----
+function renderDock(){
+  if(pending){ const L=pending, f=FR[L.friend], inn=L.kind==='in';
+    dock.innerHTML=`<div class="card" role="dialog" aria-label="תיאום עזרה">
+      <div class="av">${f.name[0]}</div>
+      <div class="who">${inn?`${esc(f.name)} ${f.g==='f'?'מציעה':'מציע'} לעזור לך`:`את מציעה לעזור ל${esc(f.name)}`}</div>
+      <div class="what"><span>${icon(inn?L.need.icon:L.need.icon)} ${esc(L.need.he)}</span><span>${icon('clock')} ${esc(L.need.when)}</span>${inn?`<span>${icon(offerFor(f,L.need).icon)} ${esc(offerFor(f,L.need).he)}</span>`:''}</div>
+      <div class="fine">${icon('link-2')} קישור זמני: נפתח רק לעזרה הזאת ומתפוגג בסופה. אין קשר קבוע, אין דירוג.</div>
+      <div class="acts"><button class="ok" id="ok">אשר</button><button class="no" id="no">בטל</button></div></div>`;
+    document.getElementById('ok').onclick=()=>{ stopSim(); confirmPending(); };
+    document.getElementById('no').onclick=()=>{ stopSim(); cancel(); };
+    return; }
+  const n=ND[selNeed]; let h;
+  if(hintOverride) h=hintOverride;
+  else if(n&&!n.shared) h=`${icon('lock')} <b>${esc(n.he)}</b> פרטי: רק את רואה אותו. אף אחד בשבט לא יודע עליו. אפשר לשתף מהרשימה.`;
+  else if(n&&resolved[n.id]) h=`${icon('check')} <b>${esc(n.he)}</b> נפתר. הקישור כבר התפוגג.`;
+  else if(n){ const M=matches(n); h=M.length?`${M.length} חברים יכולים לעזור ב<b>${esc(n.he)}</b>. הקישי על הצעה.`:`אין כרגע מי שמציע עזרה ב${esc(n.he)}.`; }
+  else if(selFriend) h=`רואים רק מה ש${esc(FR[selFriend].name)} ${FR[selFriend].g==='f'?'בחרה':'בחר'} לשתף. עיגול כתום = צורך שלו${FR[selFriend].g==='f'?'ה':''}: הקישי כדי לעזור.`;
+  else h=`הקישי על צורך משותף, והחברים שיכולים לעזור יידלקו. עיגול כתום ליד חבר = צורך שאת יכולה לעזור בו.`;
+  dock.innerHTML=`<p class="hint">${h.replace(/<svg class="i"/g,'<svg class="i" style="vertical-align:-2px"')}</p>`;
+}
+
+// ---- tally (private) ----
+let lastT={gave:0,got:0};
+function renderTally(){ const t=document.getElementById('tally'); t.innerHTML=`עזרתי <em>${tally.gave}</em> · קיבלתי <em>${tally.got}</em>`;
+  const ems=t.querySelectorAll('em'); if(tally.gave!==lastT.gave) pop(ems[0]); if(tally.got!==lastT.got) pop(ems[1]); lastT={...tally};
+  document.getElementById('tallyNote').innerHTML=`${icon('eye-off')} השבוע · רק את רואה`; }
+function pop(e){ e.classList.add('bump'); setTimeout(()=>e.classList.remove('bump'),360); }
+function bump(){}
+
+// ---- panel ----
+function renderPanel(){
+  let h=`<h2>השבט שלי</h2><p class="lead">${FRIENDS.length} חברים · עוזרים זה לזה בלי היררכיה</p>`;
+  h+=`<div class="priv">${icon('eye-off')}<div>רק מה שבחרת לשתף גלוי לשבט, ורק הענפים שאישרת. קישורים זמניים: נפתחים לעזרה אחת ומתפוגגים. מידע משפחתי וכספי (S2) ובריאות (S3) לא משותפים כברירת מחדל. אף אחד לא סופר בפומבי.</div></div>`;
+  if(selFriend){ const f=FR[selFriend], nd=f.needs[0], busy=links.some(l=>l.need===nd);
+    h+=`<h3>${f.g==='f'?'מה שהיא בחרה לשתף':'מה שהוא בחר לשתף'}</h3><div class="fcard"><div class="hd"><span class="tile av">${f.name[0]}</span><b>${esc(f.name)}, ${f.age}</b><button class="x" data-close aria-label="סגור">${icon('x')}</button></div>
+      <div class="chips">${f.offers.map(o=>{const O=OFFERS[o], s2=trTier(O.t)==='S2'; return `<span class="chip" style="--h:${hueOf(O.t)}">${icon(O.icon)}${esc(O.he)} <small>· ${esc(trName(O.t))}${s2?' · שותף במפורש':''}</small></span>`;}).join('')}</div>
+      <div style="margin-top:10px;display:flex;align-items:center;gap:8px;font-size:14px"><span class="tile" style="--h:${AMBER};width:26px;height:26px;font-size:14px">${icon(nd.icon)}</span><span style="flex:1">${f.g==='f'?'צריכה':'צריך'}: ${esc(nd.he)}<small style="display:block;color:var(--mute);font-size:12px">${esc(nd.when)}</small></span>
+      <button class="btn" data-help="${f.id}" ${resolved[nd.id]||busy?'disabled':''}>${resolved[nd.id]?'נעזר':busy?'בתהליך':'אני יכולה לעזור'}</button></div></div>`; }
+  // my needs
+  h+=`<h3>הצרכים שלי<span class="ct">${NEEDS.filter(n=>n.shared).length} משותפים · ${NEEDS.filter(n=>!n.shared).length} פרטי</span></h3><ul class="rows">`;
+  NEEDS.forEach(n=>{ const s2=trTier(n.t)==='S2', done=resolved[n.id];
+    h+=`<li class="${selNeed===n.id?'sel':''} ${done?'done':''}"><span class="tile" style="--h:${n.shared?hueOf(n.t):'#8E8E93'}">${icon(n.icon)}</span>
+      <span><button data-sel="${n.id}" style="border:0;background:none;padding:0;cursor:pointer;text-align:start;font-size:15px">${esc(n.he)}</button>${s2?`<span class="tag s2">${icon('lock')}S2</span>`:''}<small>${done?`נפתר ${esc(done.day)}`:n.shared?`${esc(n.when)} · גלוי לשבט`:'פרטי · רק אני רואה'}${s2?(n.shared?' · שותף במפורש':' · שיתוף רק בהסכמה מפורשת'):''}</small></span>
+      <span class="swl"><button class="sw" role="switch" aria-checked="${n.shared}" aria-label="שיתוף עם השבט: ${esc(n.he)}" data-tog="${n.id}"></button></span></li>`; });
+  h+=`</ul>`;
+  // reverse: friends' needs I can help with
+  const open=FRIENDS.filter(f=>!resolved[f.needs[0].id]&&ME.offers.includes(f.needs[0].fits));
+  h+=`<h3>אני יכולה לעזור<span class="ct">${open.length}</span></h3><ul class="rows">${open.map(f=>{ const nd=f.needs[0], busy=links.some(l=>l.need===nd);
+    return `<li><span class="tile av">${f.name[0]}</span><span>${esc(nd.he)}<small>${esc(f.name)} · ${esc(nd.when)} · בזכות ${esc(OFFERS[nd.fits].he)}</small></span><button class="btn" data-help="${f.id}" ${busy?'disabled':''}>${busy?'בתהליך':'אעזור'}</button></li>`; }).join('')||'<li class="empty">כל הצרכים שאת יכולה לעזור בהם נפתרו</li>'}</ul>`;
+  // active links
+  const act=links.filter(l=>l.state!=='dissolve');
+  h+=`<h3>${icon('link-2')} קישורים פעילים<span class="ct">${act.length}</span></h3>`;
+  h+=act.length?`<ul class="rows">${act.map(l=>{ const f=FR[l.friend];
+    return `<li><span class="tile full" style="--h:${l.hue}">${icon(l.need.icon)}</span><span>${l.kind==='in'?`${esc(f.name)} ← אני`:`אני ← ${esc(f.name)}`} · ${esc(l.need.he)}<small>${esc(l.need.when)} · <span class="cd" data-cd="${l.id}">${l.state==='pending'?'מחכה לאישור':''}</span></small></span><span></span><span class="meter" style="--h:${l.hue}"><i data-meter="${l.id}"></i></span></li>`; }).join('')}</ul>`:`<p class="empty">אין קישורים פתוחים. קישור נוצר רק לעזרה אחת ונעלם אחריה.</p>`;
+  // history
+  h+=`<h3>היסטוריה</h3><ul class="tl">${history.slice(0,8).map(x=>`<li style="--h:${x.dir==='consent'?'#FF375F':x.dir==='in'?hueOf(x.t):AMBER}">${esc(x.text)}<small>${x.dir==='consent'?'יומן הסכמות':x.dir==='in'?'קיבלתי':'עזרתי'} · ${esc(x.when)}</small></li>`).join('')}</ul>`;
+  h+=`<div class="legend"><span><i style="background:#30D158"></i>מלא = מה שמציעים</span><span><i style="border:2px solid ${AMBER}"></i>חלול = צורך</span><span>${icon('lock')}פרטי</span><span>${icon('link-2')}קישור זמני</span></div>`;
+  panel.innerHTML=h;
+  panel.querySelectorAll('[data-tog]').forEach(b=>b.onclick=()=>{ stopSim(); toggleShare(b.dataset.tog); });
+  panel.querySelectorAll('[data-sel]').forEach(b=>b.onclick=()=>{ stopSim(); selectNeed(b.dataset.sel); });
+  panel.querySelectorAll('[data-help]').forEach(b=>b.onclick=()=>{ stopSim(); helpFriend(b.dataset.help); });
+  panel.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>{ selFriend=null; sync(); });
+}
+function updateCountdowns(now){ links.forEach(l=>{ if(l.state!=='active') return; const left=l.dur-(now-l.t0);
+  const c=panel.querySelector(`[data-cd="${l.id}"]`); if(c) c.textContent='מתפוגג בעוד '+fmt(left);
+  const m=panel.querySelector(`[data-meter="${l.id}"]`); if(m) m.style.transform=`scaleX(${Math.max(0,left/l.dur).toFixed(3)})`; }); }
+function sync(){ renderDock(); renderPanel(); }
+
+// ---- "simulate a week" (scripted, uses the same actions a person would) ----
+let sim=null;
+function setDay(i){ dayIdx=i; document.querySelectorAll('#days span').forEach((s,j)=>{ s.classList.toggle('on',j===i); s.classList.toggle('past',j<i); }); }
+function press(){ const b=document.getElementById('ok'); if(b) b.classList.add('press'); }
+function resetAll(){ links.forEach(l=>{l.v.g.remove(); l.v.tg.remove();}); links=[]; pending=null; selNeed=null; selFriend=null; hintOverride=null;
+  for(const k in resolved) delete resolved[k]; tally.gave=0; tally.got=0; lastT={gave:0,got:0}; { const keep=history.filter(x=>x.seed||x.dir==='consent'); history.splice(0,history.length,...keep); } setDay(-1); renderTally(); sync(); }
+function startSim(scale){
+  stopSim(); resetAll(); scale=scale||(+qp.get('speed')||1); const S=ms=>ms*scale;
+  sim={timers:[],ttl:S(4200)};
+  const at=(ms,fn)=>sim.timers.push(setTimeout(()=>{ try{fn();}catch(e){console.error(e);} },S(ms)));
+  const steps=[
+    [0,()=>setDay(0)],
+    [500,()=>selectNeed('veg')],
+    [2100,()=>takeOffer('maya')],
+    [3300,press],[3500,confirmPending],
+    [4400,()=>setDay(1)],
+    [4900,()=>{ hintOverride=`${icon('sparkles')} יואב צריך טרמפ למוסך. לך יש רכב.`; selFriend='yoav'; sync(); }],
+    [6000,()=>helpFriend('yoav')],
+    [7100,press],[7300,confirmPending],
+    [8500,()=>setDay(2)],
+    [9000,()=>{ hintOverride=`${icon('sparkles')} מאיה צריכה עוגה ליום הולדת. את אופה.`; selFriend='maya'; sync(); }],
+    [10000,()=>helpFriend('maya')],
+    [11000,press],[11200,confirmPending],
+    [12500,()=>setDay(3)],
+    [13000,()=>setDay(4)],
+    [13400,()=>{ hintOverride=`${icon('sparkles')} אבי צריך עזרה עם וואטסאפ.`; selFriend='avi'; sync(); }],
+    [14300,()=>helpFriend('avi')],
+    [15300,press],[15500,confirmPending],
+    [17000,()=>setDay(5)],
+    [17600,()=>selectNeed('furn')],
+    [19300,()=>takeOffer('yoav')],
+    [20500,press],[20700,confirmPending],
+    [21800,()=>setDay(6)],
+    [27200,()=>{ hintOverride=`${icon('hand-heart')} שבוע של עזרה הדדית. כולם הרוויחו, ואף אחד לא סופר בפומבי.`; selFriend=null; selNeed=null; sync(); }],
+    [28600,()=>{ document.getElementById('play').classList.remove('on'); setPlayIcon(false); sim=null; }],
+  ];
+  steps.forEach(([t,fn])=>at(t,fn)); setPlayIcon(true);
+}
+function stopSim(){ if(!sim) return; sim.timers.forEach(clearTimeout); sim=null; hintOverride=null; setPlayIcon(false); }
+function setPlayIcon(on){ document.getElementById('play').innerHTML=on?'<svg viewBox="0 0 24 24"><path d="M7 4h4v16H7zM13 4h4v16h-4z" fill="currentColor"/></svg><span>עצירה</span>':'<svg viewBox="0 0 24 24"><path d="M7 4v16l13-8z" fill="currentColor"/></svg><span class="lg">הדמיית שבוע</span><span class="sm">הדמיה</span>'; }
+document.getElementById('play').addEventListener('click',()=>sim?stopSim():startSim());
+
+// ---- boot ----
+if(qp.get('video')) document.body.classList.add('video');
+let rz=null; addEventListener('resize',()=>{ clearTimeout(rz); rz=setTimeout(()=>{ geo(); measure(); },120); });
+measure(); renderTally(); sync(); requestAnimationFrame(frame);
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(measure);
+if(qp.get('need')) selectNeed(qp.get('need'));
+if(qp.get('play')) setTimeout(()=>startSim(), +qp.get('delay')||800);
+window.__tribe={selectNeed,takeOffer,helpFriend,confirmPending,cancel,toggleShare,startSim,stopSim,state:()=>({selNeed,selFriend,pending:!!pending,links:links.map(l=>l.state),tally:{...tally}})};
+</script>
+</body>
+</html>
