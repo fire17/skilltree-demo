@@ -10,141 +10,138 @@
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#F5F5F7; --paper:#FFFFFF; --ink:#1D1D1F; --mute:#6E6E73; --line:#E5E5EA; --fill:#F2F2F7;
-  --bark:#D1D1D6; --bark-soft:#C7C7CC;
-  --leaf:#34C759; --leaf-deep:#248A3D; --gold:#FFB800;
-  --amber:#FF9500; --amber-soft:#FFF4E5;
-  --locked:#C7C7CC; --hidden:#5856D6; --guard:#007AFF; --blue:#007AFF;
-  --heat0:#FFE3B3; --heat1:#FFB340; --heat2:#FF7A1A; --heat3:#FF3B30;
-  --sheet:#FFFFFF; --shadow:0 1px 2px rgba(0,0,0,.04),0 12px 32px rgba(0,0,0,.07);
+  --bg:#F5F5F7; --sheet:#FFFFFF; --ink:#1D1D1F; --mute:#6E6E73; --line:#E5E5EA; --fill:#F2F2F7;
+  --blue:#007AFF; --green:#34C759; --amber:#FF9500; --amber-soft:#FFF4E5; --red:#FF3B30; --indigo:#5856D6; --gray:#8E8E93;
+  --shadow:0 1px 2px rgba(0,0,0,.04),0 12px 32px rgba(0,0,0,.07);
   --glass:rgba(255,255,255,.72);
+  --space:#0B0B10; --space2:#17171F;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --bg:#000000; --paper:#1C1C1E; --ink:#F5F5F7; --mute:#98989D; --line:#38383A; --fill:#2C2C2E;
-    --bark:#48484A; --bark-soft:#3A3A3C;
-    --leaf:#30D158; --leaf-deep:#30D158; --gold:#FFD60A;
-    --amber:#FF9F0A; --amber-soft:#3A2A12;
-    --locked:#48484A; --hidden:#5E5CE6; --guard:#0A84FF; --blue:#0A84FF;
-    --sheet:#1C1C1E; --shadow:0 1px 2px rgba(0,0,0,.4),0 12px 32px rgba(0,0,0,.5);
-    --glass:rgba(28,28,30,.72);
+    --bg:#000000; --sheet:#1C1C1E; --ink:#F5F5F7; --mute:#98989D; --line:#38383A; --fill:#2C2C2E;
+    --blue:#0A84FF; --green:#30D158; --amber:#FF9F0A; --amber-soft:#3A2A12; --red:#FF453A; --indigo:#5E5CE6;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 12px 32px rgba(0,0,0,.5); --glass:rgba(28,28,30,.72);
   }
 }
 :root[data-theme="dark"]{
-  --bg:#000000; --paper:#1C1C1E; --ink:#F5F5F7; --mute:#98989D; --line:#38383A; --fill:#2C2C2E;
-  --bark:#48484A; --bark-soft:#3A3A3C;
-  --leaf:#30D158; --leaf-deep:#30D158; --gold:#FFD60A;
-  --amber:#FF9F0A; --amber-soft:#3A2A12;
-  --locked:#48484A; --hidden:#5E5CE6; --guard:#0A84FF; --blue:#0A84FF;
-  --sheet:#1C1C1E; --shadow:0 1px 2px rgba(0,0,0,.4),0 12px 32px rgba(0,0,0,.5);
-  --glass:rgba(28,28,30,.72);
+  --bg:#000000; --sheet:#1C1C1E; --ink:#F5F5F7; --mute:#98989D; --line:#38383A; --fill:#2C2C2E;
+  --blue:#0A84FF; --green:#30D158; --amber:#FF9F0A; --amber-soft:#3A2A12; --red:#FF453A; --indigo:#5E5CE6;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 12px 32px rgba(0,0,0,.5); --glass:rgba(28,28,30,.72);
 }
 *{box-sizing:border-box}
 html,body{margin:0}
 body{background:var(--bg);color:var(--ink);font:17px/1.47 -apple-system,BlinkMacSystemFont,"SF Pro Text","SF Hebrew","Heebo",system-ui,sans-serif;letter-spacing:-.01em;min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 button{font:inherit;color:inherit}
 :focus-visible{outline:3px solid color-mix(in srgb,var(--blue) 60%,transparent);outline-offset:2px;border-radius:10px}
+.i{width:1em;height:1em;vertical-align:-.14em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
 .top{position:sticky;top:0;z-index:10;display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;padding:14px max(16px,calc((100% - 1240px)/2 + 20px)) 12px;background:var(--glass);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:.5px solid var(--line)}
 .who{display:flex;align-items:center;gap:12px;flex:1 1 260px}
-.avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(160deg,#5AC8FA,#007AFF);color:#fff;display:grid;place-items:center;font-weight:700;font-size:19px;flex:none}
+.avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(160deg,#5AC8FA,#0A84FF);color:#fff;display:grid;place-items:center;font-weight:700;font-size:19px;flex:none}
 .who h1{margin:0;font-weight:700;font-size:28px;line-height:1.1;letter-spacing:-.02em}
 .who p{margin:2px 0 0;color:var(--mute);font-size:14px}
 .lens{display:flex;background:color-mix(in srgb,var(--ink) 7%,transparent);border-radius:10px;padding:2px}
-.lens button{border:0;background:none;padding:6px 16px;border-radius:8px;cursor:pointer;font-weight:600;font-size:14px;color:var(--ink)}
+.lens button{border:0;background:none;padding:6px 16px;border-radius:8px;cursor:pointer;font-weight:600;font-size:14px}
 .lens button[aria-pressed="true"]{background:var(--sheet);box-shadow:0 1px 3px rgba(0,0,0,.12),0 0 0 .5px rgba(0,0,0,.04)}
 .fake{font-size:12px;color:var(--mute)}
 
 .stage{max-width:1240px;margin:0 auto;padding:20px 16px 32px;display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:20px;align-items:start}
-.treebox{position:relative;background:var(--paper);border-radius:28px;overflow:hidden;box-shadow:var(--shadow)}
+.canvas{position:relative;border-radius:28px;overflow:hidden;color:#F5F5F7;background:radial-gradient(120% 90% at 50% 45%,var(--space2) 0%,var(--space) 62%);box-shadow:0 20px 60px rgba(0,0,0,.18)}
 svg#tree{display:block;width:100%;height:auto;touch-action:manipulation}
-.legend{display:flex;flex-wrap:wrap;gap:6px 16px;padding:12px 20px 16px;font-size:13px;color:var(--mute)}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:18px 20px 0}
+.bar b{font-weight:600;font-size:14px;color:rgba(255,255,255,.6);margin-inline-end:4px}
+.chip{border:0;background:rgba(255,255,255,.08);color:#F5F5F7;border-radius:999px;padding:7px 14px;font-size:14px;font-weight:500;cursor:pointer;transition:background .2s;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.chip:hover{background:rgba(255,255,255,.16)}
+.chip[disabled]{opacity:.35;cursor:default}
+.next{display:flex;align-items:center;gap:12px;margin:14px 20px 0;padding:12px 16px;border-radius:16px;background:rgba(255,159,10,.12);box-shadow:inset 0 0 0 .5px rgba(255,159,10,.4)}
+.next[hidden]{display:none}
+.next p{margin:0;flex:1;font-size:15px}
+.next strong{color:#FFB340}
+.next .btn{background:#FF9F0A;color:#000;padding:7px 14px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;padding:4px 20px 18px;font-size:12.5px;color:rgba(255,255,255,.55)}
 .legend span{display:inline-flex;align-items:center;gap:6px}
 .dot{width:10px;height:10px;border-radius:50%;display:inline-block}
 
-.events{padding:16px 20px 4px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-.events b{font-weight:600;font-size:15px;margin-inline-end:4px}
-.chip{border:0;background:var(--fill);border-radius:999px;padding:6px 14px;font-size:14px;font-weight:500;cursor:pointer;transition:background .2s}
-.chip:hover{background:color-mix(in srgb,var(--blue) 12%,var(--fill))}
-.chip[disabled]{opacity:.4;cursor:default}
-
 .panel{position:sticky;top:96px;background:var(--sheet);border-radius:28px;box-shadow:var(--shadow);padding:24px;min-height:300px}
-.panel h2{margin:0 0 4px;font-weight:700;font-size:26px;line-height:1.15;letter-spacing:-.02em}
+.panel h2{margin:0 0 4px;font-weight:700;font-size:26px;line-height:1.15;letter-spacing:-.02em;display:flex;align-items:center;gap:10px}
+.tile{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;color:#fff;flex:none;font-size:20px}
 .panel .sub{color:var(--mute);font-size:15px;margin:0 0 14px}
-.state{display:inline-block;font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;margin-bottom:10px}
-.st-unlocked{background:color-mix(in srgb,var(--leaf) 14%,transparent);color:var(--leaf-deep)}
-.st-mastered{background:color-mix(in srgb,var(--gold) 18%,transparent);color:#B07D00}
+.state{display:inline-block;font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;margin-bottom:12px}
+.st-unlocked{background:color-mix(in srgb,var(--green) 14%,transparent);color:#248A3D}
+.st-mastered{background:color-mix(in srgb,#FFB800 18%,transparent);color:#B07D00}
 .st-suggested{background:var(--amber-soft);color:var(--amber)}
 .st-locked{background:var(--fill);color:var(--mute)}
-.st-hidden{background:color-mix(in srgb,var(--hidden) 12%,transparent);color:var(--hidden)}
-.st-guard{background:color-mix(in srgb,var(--guard) 12%,transparent);color:var(--guard)}
+.st-hidden{background:color-mix(in srgb,var(--indigo) 12%,transparent);color:var(--indigo)}
+.st-guard{background:color-mix(in srgb,var(--blue) 12%,transparent);color:var(--blue)}
 .panel h3{font-size:13px;margin:18px 0 6px;color:var(--mute);font-weight:600}
 .panel ul{margin:0;padding-inline-start:18px}
 .panel li{margin:3px 0}
 .conf{height:6px;background:var(--fill);border-radius:3px;overflow:hidden}
-.conf i{display:block;height:100%;border-radius:3px;background:var(--amber)}
+.conf i{display:block;height:100%;border-radius:3px}
 .why{background:var(--fill);border-radius:14px;padding:12px 14px;font-size:15px;margin-top:6px}
 .apps{display:flex;flex-wrap:wrap;gap:8px}
-.app{display:flex;align-items:center;gap:8px;background:var(--fill);border-radius:14px;padding:8px 12px;font-size:14px;font-weight:500}
-.app em{font-style:normal;font-size:20px}
-.badge{display:inline-flex;align-items:center;gap:8px;font-weight:600;border-radius:14px;padding:7px 14px;color:#fff;background:linear-gradient(160deg,#4CD964,#248A3D);box-shadow:0 4px 12px color-mix(in srgb,var(--leaf) 35%,transparent)}
+.app{display:flex;align-items:center;gap:8px;background:var(--fill);border-radius:14px;padding:8px 12px 8px 12px;font-size:14px;font-weight:500}
+.app .tile{width:24px;height:24px;border-radius:7px;font-size:14px}
+.badge{display:inline-flex;align-items:center;gap:8px;font-weight:600;border-radius:14px;padding:7px 14px;color:#fff}
 .actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
 .btn{border:0;background:var(--fill);border-radius:12px;padding:10px 16px;cursor:pointer;font-weight:600;font-size:15px;color:var(--blue);transition:transform .15s,filter .15s}
 .btn.primary{background:var(--blue);color:#fff}
-.btn.warn{color:#FF3B30}
+.btn.warn{color:var(--red)}
 .btn:hover{filter:brightness(.97)}
 .btn:active{transform:scale(.97)}
 .empty{color:var(--mute)}
-.empty strong{color:var(--ink)}
+.stats{display:flex;gap:10px;margin:4px 0 12px}
+.stat{flex:1;background:var(--fill);border-radius:14px;padding:10px 12px}
+.stat b{display:block;font-size:24px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.stat span{font-size:13px;color:var(--mute)}
 
 .rank{margin:8px 0 0;padding:0;list-style:none}
-.rank li{display:grid;grid-template-columns:1fr auto;gap:4px 10px;padding:10px 4px;border-bottom:.5px solid var(--line);cursor:pointer;border-radius:8px}
+.rank li{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:4px 10px;padding:9px 4px;border-bottom:.5px solid var(--line);cursor:pointer;border-radius:8px}
 .rank li:hover{background:var(--fill)}
-.rank .bar{grid-column:1/-1;height:4px;border-radius:2px;background:var(--fill);overflow:hidden}
-.rank .bar i{display:block;height:100%;border-radius:2px;background:linear-gradient(90deg,var(--heat3),var(--heat1))}
+.rank .tile{width:26px;height:26px;border-radius:8px;font-size:15px}
+.rank .meter{grid-column:2/-1;height:4px;border-radius:2px;background:var(--fill);overflow:hidden}
+.rank .meter i{display:block;height:100%;border-radius:2px}
 .rank small{color:var(--mute);font-variant-numeric:tabular-nums}
-.proposal{border-radius:20px;padding:16px;margin-top:16px;background:linear-gradient(160deg,color-mix(in srgb,var(--hidden) 10%,var(--sheet)),color-mix(in srgb,var(--blue) 8%,var(--sheet)))}
-.proposal h4{margin:0 0 6px;font-weight:700;font-size:18px}
+.proposal{border-radius:20px;padding:16px;margin-top:16px;background:linear-gradient(160deg,color-mix(in srgb,var(--indigo) 10%,var(--sheet)),color-mix(in srgb,var(--blue) 8%,var(--sheet)))}
+.proposal h4{margin:0 0 6px;font-weight:700;font-size:18px;display:flex;gap:8px;align-items:center}
 .proposal p{margin:4px 0;font-size:14px}
 .kanon{font-size:13px;color:var(--mute);margin-top:12px}
+.perm{list-style:none;margin:6px 0 0;padding:0}
+.perm li{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 0;border-bottom:.5px solid var(--line);font-size:15px}
+.perm small{color:var(--mute)}
+.perm .lab{display:flex;align-items:center;gap:10px}
+.perm .tile{width:26px;height:26px;border-radius:8px;font-size:15px}
+.tog{position:relative;width:51px;height:31px;border:0;border-radius:999px;background:var(--fill);cursor:pointer;flex:none;font-size:0;transition:background .25s}
+.tog::after{content:"";position:absolute;top:2px;inset-inline-end:2px;width:27px;height:27px;border-radius:50%;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,.2);transition:inset-inline-end .25s}
+.tog[aria-pressed="true"]{background:var(--green)}
+.tog[aria-pressed="true"]::after{inset-inline-end:22px}
+.tog[disabled]{width:auto;height:auto;font-size:12px;font-weight:600;padding:4px 10px;background:color-mix(in srgb,var(--blue) 12%,transparent);color:var(--blue);cursor:default}
+.tog[disabled]::after{display:none}
 
-.edge{fill:none;stroke:var(--bark);stroke-linecap:round}
-.edge.faint{stroke:var(--bark-soft);stroke-dasharray:1 8}
-.node{cursor:pointer}
-.node .ring{stroke-width:2.5;filter:drop-shadow(0 3px 6px rgba(0,0,0,.12))}
-.node text{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Hebrew","Heebo",sans-serif;fill:var(--ink)}
-.node .lbl{font-size:18px;font-weight:600;paint-order:stroke;stroke:var(--paper);stroke-width:6px;stroke-linejoin:round;letter-spacing:-.01em}
-.node .ico{font-size:24px}
-.node .cnt{font-size:15px;font-weight:600}
-.node.sel .ring{stroke:var(--blue)!important;stroke-width:4}
-.node.locked .lbl{fill:var(--mute)}
-.node:hover .ring{filter:drop-shadow(0 5px 10px rgba(0,0,0,.18))}
-.pulse{animation:pulse 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
-@keyframes pulse{0%,100%{opacity:.15;transform:scale(1)}50%{opacity:.6;transform:scale(1.15)}}
-.burst{animation:burst .9s cubic-bezier(.2,.8,.2,1) forwards;transform-box:fill-box;transform-origin:center}
-@keyframes burst{from{opacity:.8;transform:scale(.7)}to{opacity:0;transform:scale(2.4)}}
-.grow{animation:grow .8s ease-out}
-@keyframes grow{from{opacity:0}to{opacity:1}}
-.ground{fill:none}
-.root{stroke:var(--bark-soft);fill:none;stroke-linecap:round}
+/* svg */
+.orbit{fill:none;stroke:rgba(255,255,255,.06);stroke-width:1}
+.edge{fill:none;stroke-linecap:round}
+.flow{fill:none;stroke:rgba(255,255,255,.55);stroke-linecap:round;stroke-dasharray:1.5 22;animation:flow 3.2s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-47}}
+.node{cursor:pointer;outline:none}
+.node .lbl{font-size:16px;font-weight:600;fill:rgba(255,255,255,.92);letter-spacing:-.01em;paint-order:stroke;stroke:#0E0E14;stroke-width:5px;stroke-linejoin:round}
+.node .cnt{font-size:13px;font-weight:600;fill:rgba(255,255,255,.55);font-variant-numeric:tabular-nums;paint-order:stroke;stroke:#0E0E14;stroke-width:5px;stroke-linejoin:round}
+.node.dim .lbl{fill:rgba(255,255,255,.42)}
+.node .hit{fill:transparent}
+.node .ic{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.node:focus-visible .core,.node.sel .core{stroke:#fff;stroke-width:2.5}
+.node:hover .core{filter:brightness(1.12)}
+.spin{animation:spin 9s linear infinite;transform-box:fill-box;transform-origin:center}
+@keyframes spin{to{transform:rotate(360deg)}}
+.breathe{animation:breathe 2.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes breathe{0%,100%{opacity:.25}50%{opacity:.8}}
+.burst{animation:burst 1s cubic-bezier(.2,.8,.2,1) forwards;transform-box:fill-box;transform-origin:center}
+@keyframes burst{from{opacity:.9;transform:scale(.8)}to{opacity:0;transform:scale(3)}}
+.root text{font-size:12.5px;font-weight:500;fill:rgba(255,255,255,.55)}
 
 .toast{visibility:hidden;position:fixed;inset-inline:0;bottom:24px;margin:auto;width:min(520px,calc(100% - 32px));background:rgba(29,29,31,.86);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);color:#fff;border-radius:18px;padding:13px 18px;box-shadow:0 10px 40px rgba(0,0,0,.25);font-size:15px;transform:translateY(140%);transition:transform .45s cubic-bezier(.2,.8,.2,1);z-index:20}
 .toast.on{transform:none;visibility:visible}
 .toast b{color:#FFB340}
-
-.next{display:flex;align-items:center;gap:12px;margin:12px 20px 4px;padding:12px 16px;border-radius:16px;background:var(--amber-soft)}
-.next[hidden]{display:none}
-.next p{margin:0;flex:1;font-size:15px}
-.next .btn{padding:7px 14px;background:var(--amber);color:#fff}
-.perm{list-style:none;margin:6px 0 0;padding:0}
-.perm li{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 0;border-bottom:.5px solid var(--line);font-size:15px}
-.perm small{color:var(--mute)}
-.tog{position:relative;width:51px;height:31px;border:0;border-radius:999px;background:var(--fill);cursor:pointer;flex:none;font-size:0;transition:background .25s}
-.tog::after{content:"";position:absolute;top:2px;inset-inline-end:2px;width:27px;height:27px;border-radius:50%;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,.2);transition:inset-inline-end .25s}
-.tog[aria-pressed="true"]{background:var(--leaf)}
-.tog[aria-pressed="true"]::after{inset-inline-end:22px}
-.tog[disabled]{width:auto;height:auto;font-size:12px;font-weight:600;padding:4px 10px;background:color-mix(in srgb,var(--guard) 12%,transparent);color:var(--guard);cursor:default}
-.tog[disabled]::after{display:none}
 
 @media (max-width:900px){
   .stage{grid-template-columns:1fr;padding:16px 12px 32px}
@@ -152,14 +149,14 @@ svg#tree{display:block;width:100%;height:auto;touch-action:manipulation}
   .who h1{font-size:24px}
 }
 @media (max-width:600px){
-  .node .lbl{font-size:25px;stroke-width:7px}
-  .node .cnt{font-size:20px}
-  .node .ico{font-size:28px}
-  .events{padding:12px 14px 4px}
-  .next{margin:10px 14px 4px}
+  .node .lbl{font-size:29px;stroke-width:8px}
+  .node .cnt{font-size:23px;stroke-width:8px}
+  .root text{font-size:19px}
+  .bar{padding:14px 14px 0}
+  .next{margin:12px 14px 0}
 }
 @media (prefers-reduced-motion:reduce){
-  .pulse,.burst,.grow{animation:none}
+  .flow,.spin,.breathe,.burst{animation:none}
   .toast,.tog,.tog::after{transition:none}
 }
 </style>
@@ -181,12 +178,10 @@ svg#tree{display:block;width:100%;height:auto;touch-action:manipulation}
 </header>
 
 <main class="stage">
-  <section class="treebox" aria-label="עץ היכולות">
-    <div class="events" id="events">
-      <b>מה קרה השבוע?</b>
-    </div>
+  <section class="canvas" aria-label="עץ היכולות">
+    <div class="bar" id="events"><b>מה קרה השבוע?</b></div>
     <div class="next" id="next" hidden></div>
-    <svg id="tree" viewBox="90 70 820 1090" role="img" aria-label="עץ שגדל מהשורשים למעלה; כל עלה הוא תכונה בפרופיל"></svg>
+    <svg id="tree" viewBox="60 70 880 880" role="img" aria-label="עץ רדיאלי: במרכז האדם, סביבו ענפים לפי תחומי חיים"></svg>
     <div class="legend" id="legend"></div>
   </section>
   <aside class="panel" id="panel" aria-live="polite"></aside>
@@ -194,148 +189,209 @@ svg#tree{display:block;width:100%;height:auto;touch-action:manipulation}
 <div class="toast" id="toast" role="status"></div>
 
 <script>
-// ---------- fake data ----------
-const USERS = 18240, K = 50;
-const N = {
-  // roots: what she declared at sign-up
-  age:   {x:395,y:1030,ico:'🎂',name:'גיל 34',state:'unlocked',root:true,src:'declared',ev:['מילאה בהרשמה'],crowd:18240},
-  sex:   {x:465,y:1058,ico:'👤',name:'אישה',state:'unlocked',root:true,src:'declared',ev:['מילאה בהרשמה'],crowd:18240},
-  city:  {x:540,y:1058,ico:'🏙️',name:'תל אביב',state:'unlocked',root:true,src:'declared',ev:['מילאה בהרשמה'],crowd:6120},
-  lang:  {x:615,y:1030,ico:'💬',name:'עברית',state:'unlocked',root:true,src:'declared',ev:['שפת הממשק'],crowd:15990},
+const ICONS = {"baby": "<path d=\"M9 12h.01\" /> <path d=\"M15 12h.01\" /> <path d=\"M10 16c.5.3 1.2.5 2 .5s1.5-.2 2-.5\" /> <path d=\"M19 6.3a9 9 0 0 1 1.8 3.9 2 2 0 0 1 0 3.6 9 9 0 0 1-17.6 0 2 2 0 0 1 0-3.6A9 9 0 0 1 12 3c2 0 3.5 1.1 3.5 2.5s-.9 2.5-2 2.5c-.8 0-1.5-.4-1.5-1\" />", "bike": "<circle cx=\"18.5\" cy=\"17.5\" r=\"3.5\" /> <circle cx=\"5.5\" cy=\"17.5\" r=\"3.5\" /> <circle cx=\"15\" cy=\"5\" r=\"1\" /> <path d=\"M12 17.5V14l-3-3 4-3 2 3h2\" />", "building-2": "<path d=\"M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z\" /> <path d=\"M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2\" /> <path d=\"M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2\" /> <path d=\"M10 6h4\" /> <path d=\"M10 10h4\" /> <path d=\"M10 14h4\" /> <path d=\"M10 18h4\" />", "cake": "<path d=\"M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8\" /> <path d=\"M4 16s.5-1 2-1 2.5 2 4 2 2.5-2 4-2 2.5 2 4 2 2-1 2-1\" /> <path d=\"M2 21h20\" /> <path d=\"M7 8v3\" /> <path d=\"M12 8v3\" /> <path d=\"M17 8v3\" /> <path d=\"M7 4h.01\" /> <path d=\"M12 4h.01\" /> <path d=\"M17 4h.01\" />", "camera": "<path d=\"M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z\" /> <circle cx=\"12\" cy=\"13\" r=\"3\" />", "cat": "<path d=\"M12 5c.67 0 1.35.09 2 .26 1.78-2 5.03-2.84 6.42-2.26 1.4.58-.42 7-.42 7 .57 1.07 1 2.24 1 3.44C21 17.9 16.97 21 12 21s-9-3-9-7.56c0-1.25.5-2.4 1-3.44 0 0-1.89-6.42-.5-7 1.39-.58 4.72.23 6.5 2.23A9.04 9.04 0 0 1 12 5Z\" /> <path d=\"M8 14v.5\" /> <path d=\"M16 14v.5\" /> <path d=\"M11.25 16.25h1.5L12 17l-.75-.75Z\" />", "coffee": "<path d=\"M10 2v2\" /> <path d=\"M14 2v2\" /> <path d=\"M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1\" /> <path d=\"M6 2v2\" />", "dog": "<path d=\"M11.25 16.25h1.5L12 17z\" /> <path d=\"M16 14v.5\" /> <path d=\"M4.42 11.247A13.152 13.152 0 0 0 4 14.556C4 18.728 7.582 21 12 21s8-2.272 8-6.444a11.702 11.702 0 0 0-.493-3.309\" /> <path d=\"M8 14v.5\" /> <path d=\"M8.5 8.5c-.384 1.05-1.083 2.028-2.344 2.5-1.931.722-3.576-.297-3.656-1-.113-.994 1.177-6.53 4-7 1.923-.321 3.651.845 3.651 2.235A7.497 7.497 0 0 1 14 5.277c0-1.39 1.844-2.598 3.767-2.277 2.823.47 4.113 6.006 4 7-.08.703-1.725 1.722-3.656 1-1.261-.472-1.855-1.45-2.239-2.5\" />", "eye-off": "<path d=\"M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49\" /> <path d=\"M14.084 14.158a3 3 0 0 1-4.242-4.242\" /> <path d=\"M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143\" /> <path d=\"m2 2 20 20\" />", "fish": "<path d=\"M6.5 12c.94-3.46 4.94-6 8.5-6 3.56 0 6.06 2.54 7 6-.94 3.47-3.44 6-7 6s-7.56-2.53-8.5-6Z\" /> <path d=\"M18 12v.5\" /> <path d=\"M16 17.93a9.77 9.77 0 0 1 0-11.86\" /> <path d=\"M7 10.67C7 8 5.58 5.97 2.73 5.5c-1 1.5-1 5 .23 6.5-1.24 1.5-1.24 5-.23 6.5C5.58 18.03 7 16 7 13.33\" /> <path d=\"M10.46 7.26C10.2 5.88 9.17 4.24 8 3h5.8a2 2 0 0 1 1.98 1.67l.23 1.4\" /> <path d=\"m16.01 17.93-.23 1.4A2 2 0 0 1 13.8 21H9.5a5.96 5.96 0 0 0 1.49-3.98\" />", "footprints": "<path d=\"M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 10 3.8 10 5.5c0 3.11-2 5.66-2 8.68V16a2 2 0 1 1-4 0Z\" /> <path d=\"M20 20v-2.38c0-2.12 1.03-3.12 1-5.62-.03-2.72-1.49-6-4.5-6C14.63 6 14 7.8 14 9.5c0 3.11 2 5.66 2 8.68V20a2 2 0 1 0 4 0Z\" /> <path d=\"M16 17h4\" /> <path d=\"M4 13h4\" />", "graduation-cap": "<path d=\"M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z\" /> <path d=\"M22 10v6\" /> <path d=\"M6 12.5V16a6 3 0 0 0 12 0v-3.5\" />", "heart-pulse": "<path d=\"M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z\" /> <path d=\"M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27\" />", "house": "<path d=\"M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8\" /> <path d=\"M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\" />", "lock": "<rect width=\"18\" height=\"11\" x=\"3\" y=\"11\" rx=\"2\" ry=\"2\" /> <path d=\"M7 11V7a5 5 0 0 1 10 0v4\" />", "map-pin": "<path d=\"M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0\" /> <circle cx=\"12\" cy=\"10\" r=\"3\" />", "message-circle": "<path d=\"M7.9 20A9 9 0 1 0 4 16.1L2 22Z\" />", "mountain": "<path d=\"m8 3 4 8 5-5 5 15H2L8 3z\" />", "package": "<path d=\"M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z\" /> <path d=\"M12 22V12\" /> <path d=\"m3.3 7 7.703 4.734a2 2 0 0 0 1.994 0L20.7 7\" /> <path d=\"m7.5 4.27 9 5.15\" />", "paw-print": "<circle cx=\"11\" cy=\"4\" r=\"2\" /> <circle cx=\"18\" cy=\"8\" r=\"2\" /> <circle cx=\"20\" cy=\"16\" r=\"2\" /> <path d=\"M9 10a5 5 0 0 1 5 5v3.5a3.5 3.5 0 0 1-6.84 1.045Q6.52 17.48 4.46 16.84A3.5 3.5 0 0 1 5.5 10Z\" />", "salad": "<path d=\"M7 21h10\" /> <path d=\"M12 21a9 9 0 0 0 9-9H3a9 9 0 0 0 9 9Z\" /> <path d=\"M11.38 12a2.4 2.4 0 0 1-.4-4.77 2.4 2.4 0 0 1 3.2-2.77 2.4 2.4 0 0 1 3.47-.63 2.4 2.4 0 0 1 3.37 3.37 2.4 2.4 0 0 1-1.1 3.7 2.51 2.51 0 0 1 .03 1.1\" /> <path d=\"m13 12 4-4\" /> <path d=\"M10.9 7.25A3.99 3.99 0 0 0 4 10c0 .73.2 1.41.54 2\" />", "school": "<path d=\"M14 22v-4a2 2 0 1 0-4 0v4\" /> <path d=\"m18 10 3.447 1.724a1 1 0 0 1 .553.894V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-7.382a1 1 0 0 1 .553-.894L6 10\" /> <path d=\"M18 5v17\" /> <path d=\"m4 6 7.106-3.553a2 2 0 0 1 1.788 0L20 6\" /> <path d=\"M6 5v17\" /> <circle cx=\"12\" cy=\"9\" r=\"2\" />", "shield": "<path d=\"M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z\" />", "sparkles": "<path d=\"M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z\" /> <path d=\"M20 3v4\" /> <path d=\"M22 5h-4\" /> <path d=\"M4 17v2\" /> <path d=\"M5 18H3\" />", "user": "<path d=\"M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2\" /> <circle cx=\"12\" cy=\"7\" r=\"4\" />", "users": "<path d=\"M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2\" /> <circle cx=\"9\" cy=\"7\" r=\"4\" /> <path d=\"M22 21v-2a4 4 0 0 0-3-3.87\" /> <path d=\"M16 3.13a4 4 0 0 1 0 7.75\" />"};
+const USERS = 18240, K = 50, CX = 500, CY = 500, R1 = 205, R2 = 345;
 
-  pets:  {x:300,y:735,ico:'🐾',name:'בעלת כלב',parent:'T820',state:'unlocked',src:'confirmed',conf:.96,
-          ev:['7 קניות מזון לכלבים ב־4 חודשים','2 ביקורים אצל וטרינר דרך האפליקציה'],
-          badge:'🐕 בעלת כלב',apps:[['🦮','טיולי כלבים בשכונה'],['💉','תזכורת חיסונים'],['🥩','מנוי מזון חודשי']],crowd:4812},
-  bigdog:{x:160,y:670,ico:'🐕',name:'כלב גדול',parent:'pets',state:'unlocked',src:'confirmed',conf:.9,
-          ev:['שקי מזון 15 ק״ג','רתמה מידה L'],apps:[['🏞️','גינות כלבים גדולות']],crowd:1930},
-  puppy: {x:205,y:575,q:'יש לך גור באילוף',ico:'🎓',name:'אילוף גורים',parent:'pets',state:'suggested',src:'inferred',conf:.62,
-          ev:['חיפשה "אילוף גורים" פעמיים','קנתה חטיפי אילוף'],why:'זיהינו חיפושים וקניות של מוצרי אילוף. אם זה לא את, נסיר את זה.',
-          apps:[['📅','קורס אילוף קבוצתי']],crowd:640},
-  cat:   {x:418,y:655,q:'יש לך חתול',ico:'🐈',name:'בעלת חתול',parent:'pets',state:'locked',live:true,src:'inferred',conf:.58,
-          ev:['קנתה חול לחתולים'],why:'ענף שנוצר עכשיו מהתנהגות חדשה. עוד לא היה מוכן מראש במערכת.',
-          apps:[['🧶','חנות חתולים (טיוטה)']],crowd:38,hint:'נפתח מקניות למוצרי חתולים'},
-
-  family:{x:700,y:680,ico:'👪',name:'הורה',parent:'T770',state:'unlocked',src:'declared',
-          ev:['הוסיפה ילדה לחשבון המשפחתי'],why:'משפחה היא מידע רגיש לפי החוק בישראל (תיקון 13). לכן לא מסיקים אותה, רק מה שסיפרת.',badge:'🧸 הורה',apps:[['🎒','רשימות ציוד לגן'],['🍼','בייביסיטר מהשכונה']],crowd:7420},
-  gan:   {x:835,y:610,ico:'🧸',name:'ילדה בגן',parent:'family',state:'unlocked',src:'declared',ev:['הצהירה בחשבון המשפחתי'],
-          apps:[['🎨','חוגים לגיל הגן']],crowd:2210},
-  school:{x:770,y:525,ico:'🏫',name:'בית ספר',parent:'family',state:'locked',src:'declared',hint:'נפתח כשתעדכני כיתה, לא מסיקים לבד',crowd:3010},
-
-  home:  {x:330,y:520,ico:'🏠',name:'שוכרת דירה',parent:'T640',state:'unlocked',src:'declared',
-          ev:['סימנה בפרופיל: שוכרת'],why:'מידע כספי רגיש. לא מסיקים אותו מתשלומים, רק ממה שסימנת.',apps:[['🧾','מעקב שכר דירה']],crowd:5530},
-  move:  {x:190,y:455,q:'את לקראת מעבר דירה',ico:'📦',name:'מעבר דירה',parent:'home',state:'suggested',src:'inferred',conf:.55,
-          ev:['קנתה קרטונים ונייר בועות','חיפשה מובילים'],why:'קניות ארגזים וחיפוש מובילים בשבועיים האחרונים.',
-          apps:[['🚚','השוואת מובילים'],['🔌','העברת חשמל ואינטרנט']],crowd:410},
-
-  food:  {x:690,y:470,ico:'☕',name:'קפה של בוקר',parent:'T560',state:'mastered',src:'confirmed',conf:.99,
-          ev:['112 הזמנות קפה','רצף של 41 בקרים'],badge:'☕ אלופת הבוקר',apps:[['⏱️','הזמנה מראש בדרך'],['🫘','פולים מהקלייה']],crowd:9020},
-  veg:   {x:840,y:410,q:'את צמחונית',ico:'🥗',name:'צמחונית',parent:'food',state:'suggested',src:'inferred',conf:.71,
-          ev:['30 מתוך 31 הזמנות אוכל בלי בשר'],why:'רוב ההזמנות שלך בלי בשר. רק אם תאשרי זה יופיע בפרופיל.',
-          apps:[['🌱','מסעדות צמחוניות']],crowd:2150},
-  sushi: {x:782,y:285,q:'את אוהבת סושי',ico:'🍣',name:'אוהבת סושי',parent:'food',state:'locked',live:true,src:'inferred',conf:.6,
-          ev:['3 הזמנות סושי בשבוע'],why:'שלוש הזמנות סושי השבוע. ענף קטן שנפתח רק אם תרצי.',apps:[['🍱','מבצעי סושי']],crowd:1180,hint:'נפתח מהזמנות'},
-
-  bike:  {x:340,y:370,ico:'🚲',name:'רוכבת אופניים',parent:'T460',state:'unlocked',src:'confirmed',conf:.83,
-          ev:['השכרת אופניים 26 פעמים'],apps:[['🗺️','מסלולי רכיבה']],crowd:2380},
-  ride:  {x:215,y:300,ico:'⛰️',name:'רכיבות ארוכות',parent:'bike',state:'locked',src:'inferred',hint:'נפתח אחרי 5 רכיבות מעל 30 ק״מ',crowd:420},
-
-  health:{x:660,y:300,ico:'🛡️',name:'בריאות',parent:'T400',state:'guard',src:'none',
-          why:'בריאות, הריון, דת ונטייה מינית הן קטגוריות רגישות. המערכת לא מסיקה אותן לעולם. אם תרצי הטבות בתחום, את יכולה לספר בעצמך, ולמחוק מתי שתרצי.',
-          crowd:null},
-
-  hobby: {x:500,y:215,ico:'✨',name:'תחביבים',parent:'T300',state:'unlocked',src:'confirmed',conf:.8,ev:['פעילות בכמה ענפים'],crowd:11800},
-  photo: {x:405,y:130,ico:'📷',name:'צילום',parent:'hobby',state:'hidden',src:'confirmed',conf:.86,
-          ev:['קנתה עדשה','הצטרפה לסדנת צילום'],why:'הסתרת את הענף הזה. הוא נשאר רק אצלך ולא משמש להצעות.',apps:[['🖼️','סדנאות צילום']],crowd:1660},
-  hike:  {x:595,y:130,ico:'🥾',name:'טיולים',parent:'hobby',state:'unlocked',src:'confirmed',conf:.81,
-          ev:['3 הזמנות לינה בצפון','קנתה נעלי הליכה'],apps:[['🏕️','טיולי סוף שבוע']],crowd:3340},
+// limbs = life domains, each with its own identity colour
+const LIMBS = {
+  pets:  {name:'חיות מחמד', hue:'#FF9F0A', a:309},
+  move:  {name:'תנועה וטיולים', hue:'#0A84FF', a:0},
+  food:  {name:'אוכל ושתייה', hue:'#30D158', a:51},
+  family:{name:'משפחה', hue:'#FF375F', a:103},
+  health:{name:'בריאות', hue:'#8E8E93', a:154},
+  home:  {name:'בית', hue:'#64D2FF', a:206},
+  hobby: {name:'תחביבים', hue:'#BF5AF2', a:257},
 };
-// trunk anchor points (branch bases on trunk)
-const T = {T820:[500,820],T770:[500,770],T640:[500,640],T560:[500,560],T460:[500,460],T400:[500,400],T300:[500,300]};
+// roots: what she declared at sign-up (sit on the inner ring, between limbs)
+const ROOTS = [['גיל 34',77],['אישה',128.5],['תל אביב',231.5],['עברית',283]];
+
+const N = {
+  pets:  {limb:'pets',d:1,off:0,ic:'paw-print',name:'בעלת כלב',state:'unlocked',src:'confirmed',conf:.96,
+          ev:['7 קניות מזון לכלבים ב־4 חודשים','2 ביקורים אצל וטרינר דרך האפליקציה'],
+          badge:'בעלת כלב',apps:['טיולי כלבים בשכונה','תזכורת חיסונים','מנוי מזון חודשי'],crowd:4812,growth:22,weight:1.1},
+  bigdog:{limb:'pets',d:2,off:-19,parent:'pets',ic:'dog',name:'כלב גדול',state:'unlocked',src:'confirmed',conf:.9,
+          ev:['שקי מזון 15 ק״ג','רתמה מידה L'],apps:['גינות כלבים גדולות'],crowd:1930,growth:38,weight:1.2},
+  puppy: {limb:'pets',d:2,off:0,parent:'pets',ic:'graduation-cap',q:'יש לך גור באילוף',name:'אילוף גורים',state:'suggested',src:'inferred',conf:.62,
+          ev:['חיפשה "אילוף גורים" פעמיים','קנתה חטיפי אילוף'],why:'זיהינו חיפושים וקניות של מוצרי אילוף. אם זה לא את, נסיר את זה.',
+          apps:['קורס אילוף קבוצתי'],crowd:640,growth:45,weight:1},
+  cat:   {limb:'pets',d:2,off:19,parent:'pets',ic:'cat',q:'יש לך חתול',name:'בעלת חתול',state:'locked',live:true,src:'inferred',conf:.58,
+          ev:['קנתה חול לחתולים'],why:'ענף שנוצר עכשיו מהתנהגות חדשה. עוד לא היה מוכן מראש במערכת.',
+          apps:['חנות חתולים (טיוטה)'],crowd:38,growth:300,weight:1,hint:'נפתח מקניות למוצרי חתולים'},
+
+  bike:  {limb:'move',d:1,off:0,ic:'bike',name:'רוכבת אופניים',state:'unlocked',src:'confirmed',conf:.83,
+          ev:['השכרת אופניים 26 פעמים'],apps:['מסלולי רכיבה'],crowd:2380,growth:11,weight:1},
+  ride:  {limb:'move',d:2,off:-13,parent:'bike',ic:'mountain',name:'רכיבות ארוכות',state:'locked',src:'inferred',hint:'נפתח אחרי 5 רכיבות מעל 30 ק״מ',crowd:420,growth:20,weight:1},
+  hike:  {limb:'move',d:2,off:13,parent:'bike',ic:'footprints',name:'טיולים',state:'unlocked',src:'confirmed',conf:.81,
+          ev:['3 הזמנות לינה בצפון','קנתה נעלי הליכה'],apps:['טיולי סוף שבוע'],crowd:3340,growth:19,weight:1},
+
+  food:  {limb:'food',d:1,off:0,ic:'coffee',name:'קפה של בוקר',state:'mastered',src:'confirmed',conf:.99,
+          ev:['112 הזמנות קפה','רצף של 41 בקרים'],badge:'אלופת הבוקר',apps:['הזמנה מראש בדרך','פולים מהקלייה'],crowd:9020,growth:4,weight:.8},
+  veg:   {limb:'food',d:2,off:-13,parent:'food',ic:'salad',q:'את צמחונית',name:'צמחונית',state:'suggested',src:'inferred',conf:.71,
+          ev:['30 מתוך 31 הזמנות אוכל בלי בשר'],why:'רוב ההזמנות שלך בלי בשר. רק אם תאשרי זה יופיע בפרופיל.',
+          apps:['מסעדות צמחוניות'],crowd:2150,growth:14,weight:1},
+  sushi: {limb:'food',d:2,off:13,parent:'food',ic:'fish',q:'את אוהבת סושי',name:'אוהבת סושי',state:'locked',live:true,src:'inferred',conf:.6,
+          ev:['3 הזמנות סושי בשבוע'],why:'שלוש הזמנות סושי השבוע. ענף קטן שנפתח רק אם תרצי.',apps:['מבצעי סושי'],crowd:1180,growth:9,weight:.7,hint:'נפתח מהזמנות'},
+
+  family:{limb:'family',d:1,off:0,ic:'users',name:'הורה',state:'unlocked',src:'declared',
+          ev:['הוסיפה ילדה לחשבון המשפחתי'],why:'משפחה היא מידע רגיש לפי החוק בישראל (תיקון 13). לכן לא מסיקים אותה, רק מה שסיפרת.',
+          badge:'הורה',apps:['רשימות ציוד לגן','בייביסיטר מהשכונה'],crowd:7420,growth:6,weight:1.3},
+  gan:   {limb:'family',d:2,off:-13,parent:'family',ic:'baby',name:'ילדה בגן',state:'unlocked',src:'declared',ev:['הצהירה בחשבון המשפחתי'],
+          apps:['חוגים לגיל הגן'],crowd:2210,growth:8,weight:1},
+  school:{limb:'family',d:2,off:13,parent:'family',ic:'school',name:'בית ספר',state:'locked',src:'declared',hint:'נפתח כשתעדכני כיתה. לא מסיקים לבד.',crowd:3010,growth:7,weight:1},
+
+  health:{limb:'health',d:1,off:0,ic:'shield',name:'בריאות',state:'guard',src:'none',
+          why:'בריאות, הריון, דת ונטייה מינית הן קטגוריות רגישות. המערכת לא מסיקה אותן לעולם. אם תרצי הטבות בתחום, את יכולה לספר בעצמך, ולמחוק מתי שתרצי.',crowd:null},
+
+  home:  {limb:'home',d:1,off:0,ic:'house',name:'שוכרת דירה',state:'unlocked',src:'declared',
+          ev:['סימנה בפרופיל: שוכרת'],why:'מידע כספי רגיש. לא מסיקים אותו מתשלומים, רק ממה שסימנת.',apps:['מעקב שכר דירה'],crowd:5530,growth:5,weight:1},
+  moving:{limb:'home',d:2,off:0,parent:'home',ic:'package',q:'את לקראת מעבר דירה',name:'מעבר דירה',state:'suggested',src:'inferred',conf:.55,
+          ev:['קנתה קרטונים ונייר בועות','חיפשה מובילים'],why:'קניות ארגזים וחיפוש מובילים בשבועיים האחרונים.',
+          apps:['השוואת מובילים','העברת חשמל ואינטרנט'],crowd:410,growth:61,weight:1.3},
+
+  hobby: {limb:'hobby',d:1,off:0,ic:'sparkles',name:'תחביבים',state:'unlocked',src:'confirmed',conf:.8,ev:['פעילות בכמה ענפים'],crowd:11800,growth:3,weight:.5},
+  photo: {limb:'hobby',d:2,off:0,parent:'hobby',ic:'camera',name:'צילום',state:'hidden',src:'confirmed',conf:.86,
+          ev:['קנתה עדשה','הצטרפה לסדנת צילום'],why:'הסתרת את הענף הזה. הוא נשאר רק אצלך ולא משמש להצעות.',apps:['סדנאות צילום'],crowd:1660,growth:12,weight:1},
+};
+for(const n of Object.values(N)){
+  const L=LIMBS[n.limb], a=(L.a+n.off)*Math.PI/180, r=n.d===1?R1:R2;
+  n.x=CX+r*Math.sin(a); n.y=CY-r*Math.cos(a); n.hue=L.hue;
+}
 
 const EVENTS = [
-  {id:'e1',label:'קנתה חול לחתולים',run(){ reveal('cat','נוצר ענף חדש בלייב: <b>בעלת חתול</b>. ממתין לאישור שלה.'); }},
-  {id:'e2',label:'3 הזמנות סושי',run(){ reveal('sushi','עלה חדש: <b>אוהבת סושי</b>. מוצע, לא מופעל.'); }},
-  {id:'e3',label:'הזמינה עגלת תינוק',run(){ guardToast(); }},
+  {label:'קנתה חול לחתולים',run(){ reveal('cat','נוצר ענף חדש בלייב: <b>בעלת חתול</b>. ממתין לאישור שלה.'); }},
+  {label:'3 הזמנות סושי',run(){ reveal('sushi','עלה חדש: <b>אוהבת סושי</b>. מוצע, לא מופעל.'); }},
+  {label:'הזמינה עגלת תינוק',run(){ toast('<b>עצרנו.</b> עגלת תינוק יכולה לרמוז על הריון, וזה מידע רגיש. לא מסיקים. היא יכולה לבחור בעצמה אם לפתוח ענף.'); select('health'); }},
 ];
-
-
-// what the system may learn, per category (opt-in, off = never inferred)
 const PERM=[
   {k:'pets',name:'חיות מחמד',on:true,nodes:['pets','bigdog','puppy','cat']},
   {k:'food',name:'אוכל ושתייה',on:true,nodes:['food','veg','sushi']},
   {k:'move',name:'תנועה וטיולים',on:true,nodes:['bike','ride','hike']},
-  {k:'home',name:'בית ומעבר דירה',on:true,nodes:['move']},
+  {k:'home',name:'בית ומעבר דירה',on:true,nodes:['moving']},
   {k:'family',name:'משפחה',on:false,fixed:'רק מה שסיפרת',nodes:[]},
-  {k:'money',name:'כסף והכנסה',on:false,fixed:'רק מה שסיפרת',nodes:[]},
+  {k:'money',name:'כסף והכנסה',on:false,fixed:'רק מה שסיפרת',nodes:[],hue:'#FFD60A',ic:'lock'},
   {k:'health',name:'בריאות, הריון, דת, נטייה',on:false,fixed:'אף פעם לא',nodes:[]},
 ];
-// ---------- state ----------
+
 let lens='me', sel=null;
 const svg=document.getElementById('tree'), panel=document.getElementById('panel');
 const NS='http://www.w3.org/2000/svg';
 const el=(t,a={},p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e};
-const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
-
-function anchor(id){ return T[id] || [N[id].x,N[id].y]; }
-function permOff(id){ return PERM.some(p=>!p.on&&p.nodes.includes(id)); }
-function visible(n){ const id=Object.keys(N).find(k=>N[k]===n); if(n.state==='suggested'&&permOff(id)) return false; return !(n.live && n.state==='locked' && !n.revealed); }
+const icon=(k,cls='i')=>`<svg class="${cls}" viewBox="0 0 24 24" aria-hidden="true">${ICONS[k]||''}</svg>`;
+const tile=(n,cls='tile')=>`<span class="${cls}" style="background:linear-gradient(160deg,${n.hue}EE,${n.hue})">${icon(n.ic)}</span>`;
 
 const STATE_TXT={unlocked:'פתוח',mastered:'שליטה מלאה',suggested:'מוצע, ממתין לאישור שלך',locked:'נעול',hidden:'מוסתר, רק את רואה',guard:'מוגן, לא מסיקים'};
 const SRC_TXT={declared:'סיפרת לנו',confirmed:'הסקנו ואישרת',inferred:'הסקה של המערכת',none:'אין מידע ואין הסקה'};
-
-function heat(c){ if(c==null) return css('--guard'); const r=c/USERS; return r>.35?css('--heat3'):r>.15?css('--heat2'):r>.05?css('--heat1'):css('--heat0'); }
-function fmt(c){ return c<K?'פחות מ־'+K:c.toLocaleString('he-IL'); }
+const HEAT=['#FFD60A','#FF9F0A','#FF6B2C','#FF453A'];
+const heat=c=>{ const r=c/USERS; return r>.35?HEAT[3]:r>.15?HEAT[2]:r>.05?HEAT[1]:HEAT[0]; };
+const fmt=c=>c<K?'פחות מ־'+K:c.toLocaleString('he-IL');
+const permOff=id=>PERM.some(p=>!p.on&&p.nodes.includes(id));
+const shown=id=>{ const n=N[id]; if(n.state==='suggested'&&permOff(id)) return false; return !(n.live && n.state==='locked' && !n.revealed); };
+const lit=n=>n.state==='unlocked'||n.state==='mastered';
 
 // ---------- draw ----------
+function curve(x1,y1,x2,y2,bend){
+  const mx=(x1+x2)/2, my=(y1+y2)/2, dx=x2-x1, dy=y2-y1;
+  return `M${x1.toFixed(1)} ${y1.toFixed(1)} Q ${(mx-dy*bend).toFixed(1)} ${(my+dx*bend).toFixed(1)} ${x2.toFixed(1)} ${y2.toFixed(1)}`;
+}
 function draw(){
   svg.innerHTML='';
+  const M=matchMedia('(max-width:600px)').matches?1.45:1;
+  svg.setAttribute('viewBox',M>1?'95 105 810 810':'60 70 880 880');
   const crowd=lens==='crowd';
-  // ground + roots
-  el('ellipse',{cx:500,cy:1040,rx:330,ry:60,class:'ground'},svg);
-  ['age','sex','city','lang'].forEach(k=>{const n=N[k];el('path',{d:`M500 1000 Q ${(500+n.x)/2} ${n.y-50} ${n.x} ${n.y}`,class:'root','stroke-width':crowd?6:4},svg)});
-  // trunk
-  el('path',{d:'M500 1010 C 488 860, 514 640, 496 470 S 504 330, 500 262',class:'edge','stroke-width':16},svg);
+  const defs=el('defs',{},svg);
+  const glow=el('filter',{id:'glow',x:'-80%',y:'-80%',width:'260%',height:'260%'},defs);
+  el('feGaussianBlur',{stdDeviation:'9',result:'b'},glow);
+  const mg=el('feMerge',{},glow); el('feMergeNode',{in:'b'},mg); el('feMergeNode',{in:'SourceGraphic'},mg);
+  const soft=el('filter',{id:'soft',x:'-100%',y:'-100%',width:'300%',height:'300%'},defs);
+  el('feGaussianBlur',{stdDeviation:'16'},soft);
+
+  [R1,R2,120].forEach(r=>el('circle',{cx:CX,cy:CY,r,class:'orbit'},svg));
+
   // edges
+  let gi=0;
   for(const [id,n] of Object.entries(N)){
-    if(n.root||!n.parent||!visible(n)) continue;
-    const [px,py]=anchor(n.parent);
-    const w = crowd ? (n.crowd==null?3:Math.max(2.5,Math.min(18,(n.crowd/USERS)*45))) : (T[n.parent]?8:5);
-    const cx=(px+n.x)/2, cy=Math.min(py,n.y)-30;
-    const faint = !crowd && (n.state==='locked'||n.state==='guard');
-    const p=el('path',{d:`M${px} ${py} Q ${cx} ${cy} ${n.x} ${n.y}`,class:'edge'+(faint?' faint':''),'stroke-width':faint?3:w},svg);
-    if(crowd && n.crowd!=null) p.style.stroke=heat(n.crowd);
-    if(n.justRevealed) p.classList.add('grow');
+    if(!shown(id)) continue;
+    const p=n.parent?N[n.parent]:null;
+    const a=LIMBS[n.limb].a*Math.PI/180;
+    const x1=p?p.x:CX+92*Math.sin(a), y1=p?p.y:CY-92*Math.cos(a);
+    const d=curve(x1,y1,n.x,n.y,p?(n.off>0?-.12:n.off<0?.12:0):.08);
+    const gid='g'+(gi++);
+    const lg=el('linearGradient',{id:gid,gradientUnits:'userSpaceOnUse',x1,y1,x2:n.x,y2:n.y},defs);
+    let w, op, dash='none', col=n.hue;
+    if(crowd){
+      col=n.crowd==null?'#8E8E93':heat(n.crowd);
+      w=n.crowd==null?1.2:Math.max(1.5,Math.min(14,(n.crowd/USERS)*40)); op=n.crowd!=null&&n.crowd<K?.35:.95;
+      if(n.crowd==null) dash='2 7';
+    } else {
+      const on=lit(n)||n.state==='suggested';
+      w=on?(n.d===1?3.2:2.2):1.3; op=on?.95:.4;
+      if(!on) dash='2 7'; if(n.state==='guard') col='#8E8E93';
+    }
+    el('stop',{offset:'0%','stop-color':p?(crowd&&p.crowd!=null?heat(p.crowd):p.hue):'#FFFFFF','stop-opacity':p?op:.12},lg);
+    el('stop',{offset:'100%','stop-color':col,'stop-opacity':op},lg);
+    el('path',{d,class:'edge',stroke:`url(#${gid})`,'stroke-width':w,'stroke-dasharray':dash},svg);
+    if(!crowd && lit(n)) el('path',{d,class:'flow','stroke-width':Math.max(1.6,w-.6)},svg);
   }
+
+  // center
+  const total=Object.keys(N).filter(k=>N[k].state!=='guard').length;
+  const opened=Object.values(N).filter(lit).length;
+  el('circle',{cx:CX,cy:CY,r:120,fill:'url(#none)',class:'orbit'},svg);
+  el('circle',{cx:CX,cy:CY,r:70,fill:crowd?'#FF6B2C':'#0A84FF',opacity:.35,filter:'url(#soft)'},svg);
+  const cg=el('g',{},svg);
+  const cgrad=el('linearGradient',{id:'cgrad',x1:0,y1:0,x2:0,y2:1},defs);
+  el('stop',{offset:'0%','stop-color':crowd?'#FF9F0A':'#5AC8FA'},cgrad); el('stop',{offset:'100%','stop-color':crowd?'#FF453A':'#0A84FF'},cgrad);
+  el('circle',{cx:CX,cy:CY,r:56,fill:'url(#cgrad)'},cg);
+  const ringR=72, C=2*Math.PI*ringR, frac=crowd?1:opened/total;
+  el('circle',{cx:CX,cy:CY,r:ringR,fill:'none',stroke:'rgba(255,255,255,.1)','stroke-width':6},cg);
+  el('circle',{cx:CX,cy:CY,r:ringR,fill:'none',stroke:crowd?'#FF9F0A':'#30D158','stroke-width':6,'stroke-linecap':'round','stroke-dasharray':`${(C*frac).toFixed(1)} ${C.toFixed(1)}`,transform:`rotate(-90 ${CX} ${CY})`},cg);
+  const ct=el('text',{x:CX,y:crowd?CY+8:CY+14,'text-anchor':'middle','font-size':crowd?26:40,'font-weight':700,fill:'#fff'},cg);
+  ct.textContent=crowd?USERS.toLocaleString('he-IL'):'נ';
+  if(crowd){ const s=el('text',{x:CX,y:CY+30,'text-anchor':'middle','font-size':13,'font-weight':500,fill:'rgba(255,255,255,.75)'},cg); s.textContent='משתמשים'; }
+
+  // roots on the inner ring
+  if(!crowd) ROOTS.forEach(([t,a])=>{
+    const r=a*Math.PI/180, x=CX+120*Math.sin(r), y=CY-120*Math.cos(r);
+    const g=el('g',{class:'root'},svg);
+    el('circle',{cx:x,cy:y,r:3.5,fill:'rgba(255,255,255,.55)'},g);
+    const tx=el('text',{x,y:y+(Math.cos(r)>0?-11:22),'text-anchor':'middle'},g); tx.textContent=t;
+  });
+
   // nodes
   for(const [id,n] of Object.entries(N)){
-    if(!visible(n)) continue;
-    const g=el('g',{class:'node '+n.state+(sel===id?' sel':''),tabindex:0,role:'button','aria-label':n.name+', '+(crowd?fmt(n.crowd??0):STATE_TXT[n.state])},svg);
+    if(!shown(id)) continue;
+    const dim=!crowd&&(n.state==='locked'||n.state==='hidden');
+    const g=el('g',{class:'node'+(dim?' dim':'')+(sel===id?' sel':''),tabindex:0,role:'button','aria-label':n.name+', '+(crowd?(n.crowd==null?'לא נאסף':fmt(n.crowd)):STATE_TXT[n.state])},svg);
     g.addEventListener('click',()=>select(id));
     g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();select(id)}});
-    const r=n.root?24:(T[n.parent]?36:30);
-    if(n.justRevealed){ el('circle',{cx:n.x,cy:n.y,r:r+6,fill:'none',stroke:css('--amber'),'stroke-width':4,class:'burst'},g); }
+    let r=(n.d===1?30:24)*M, fill, stroke='none', icol='#fff', ic=n.ic, halo=null;
     if(crowd){
-      const c=n.crowd==null?null:n.crowd;
-      const low=c!=null&&c<K;
-      el('circle',{cx:n.x,cy:n.y,r,fill:low?css('--paper'):heat(c),class:'ring',stroke:low?css('--locked'):css('--paper'),'stroke-dasharray':low?'5 5':'none'},g);
-      el('text',{x:n.x,y:n.y+9,'text-anchor':'middle',class:'ico'},g).textContent=n.ico;
-      el('text',{x:n.x,y:n.y+r+24,'text-anchor':'middle',class:'lbl'},g).textContent=n.name;
-      if(!n.root||true){ el('text',{x:n.x,y:n.y+r+44,'text-anchor':'middle',class:'cnt',fill:css('--mute')},g).textContent=c==null?'לא נאסף':fmt(c); }
-      continue;
+      const c=n.crowd;
+      if(c==null){ fill='rgba(142,142,147,.14)'; stroke='#8E8E93'; icol='#8E8E93'; }
+      else if(c<K){ fill='rgba(255,255,255,.04)'; stroke='rgba(255,255,255,.3)'; icol='rgba(255,255,255,.5)'; }
+      else { r=18+Math.sqrt(c/USERS)*34; fill=heat(c); halo=heat(c); icol='#1D1D1F'; }
+    } else if(lit(n)){ fill=n.hue; halo=n.hue; }
+    else if(n.state==='suggested'){ fill=n.hue+'22'; stroke=n.hue; icol=n.hue; }
+    else if(n.state==='guard'){ fill='rgba(142,142,147,.14)'; stroke='#8E8E93'; icol='#AEAEB2'; }
+    else if(n.state==='hidden'){ fill='rgba(255,255,255,.03)'; stroke='rgba(255,255,255,.28)'; icol='rgba(255,255,255,.45)'; ic='eye-off'; }
+    else { fill='rgba(255,255,255,.04)'; stroke='rgba(255,255,255,.2)'; icol='rgba(255,255,255,.4)'; ic='lock'; }
+
+    el('circle',{cx:n.x,cy:n.y,r:r+18,class:'hit'},g);
+    if(halo) el('circle',{cx:n.x,cy:n.y,r:r*.9,fill:halo,opacity:.55,filter:'url(#soft)'},g);
+    if(n.justRevealed) el('circle',{cx:n.x,cy:n.y,r:r+4,fill:'none',stroke:n.hue,'stroke-width':3,class:'burst'},g);
+    if(!crowd&&n.state==='suggested'){
+      el('circle',{cx:n.x,cy:n.y,r:r+9,fill:'none',stroke:n.hue,'stroke-width':1.5,'stroke-dasharray':'3 6',class:'spin'},g);
+      el('circle',{cx:n.x,cy:n.y,r:r+4,fill:n.hue,opacity:.25,filter:'url(#soft)',class:'breathe'},g);
     }
-    let fill=css('--fill')||css('--paper'), stroke=css('--locked'), dash='none';
-    if(n.state==='unlocked'){fill=css('--leaf');stroke=css('--leaf-deep')}
-    if(n.state==='mastered'){fill=css('--leaf');stroke=css('--gold')}
-    if(n.state==='suggested'){fill=css('--amber-soft');stroke=css('--amber')}
-    if(n.state==='hidden'){fill=css('--paper');stroke=css('--hidden');dash='2 5'}
-    if(n.state==='guard'){fill=css('--paper');stroke=css('--guard')}
-    if(n.state==='suggested') el('circle',{cx:n.x,cy:n.y,r:r+8,fill:'none',stroke:css('--amber'),'stroke-width':2,class:'pulse'},g);
-    if(n.state==='mastered') el('circle',{cx:n.x,cy:n.y,r:r+7,fill:'none',stroke:css('--gold'),'stroke-width':3},g);
-    el('circle',{cx:n.x,cy:n.y,r,fill,stroke,'stroke-dasharray':dash,class:'ring'},g);
-    const ico=el('text',{x:n.x,y:n.y+9,'text-anchor':'middle',class:'ico'},g); ico.textContent=n.state==='locked'?'🔒':n.state==='hidden'?'🙈':n.ico;
-    if(n.state==='locked'||n.state==='hidden') ico.setAttribute('opacity','.75');
-    el('text',{x:n.x,y:n.y+r+24,'text-anchor':'middle',class:'lbl'},g).textContent=n.state==='locked'&&!n.revealed?n.name:n.name;
-    if(n.state==='suggested') el('circle',{cx:n.x+r*.72,cy:n.y-r*.72,r:7,fill:css('--amber'),stroke:css('--paper'),'stroke-width':2.5},g);
+    if(!crowd&&n.state==='mastered') el('circle',{cx:n.x,cy:n.y,r:r+7,fill:'none',stroke:'#FFD60A','stroke-width':2},g);
+    const core=el('circle',{cx:n.x,cy:n.y,r,fill,stroke,'stroke-width':stroke==='none'?0:1.6,class:'core','stroke-dasharray':(!crowd&&n.state==='hidden')||(crowd&&n.crowd!=null&&n.crowd<K)?'3 4':'none'},g);
+    const s=(n.d===1?24:20)*M/24, isz=24*s;
+    const ig=el('g',{transform:`translate(${(n.x-isz/2).toFixed(1)} ${(n.y-isz/2).toFixed(1)}) scale(${s})`,class:'ic',stroke:icol,'stroke-width':2},g);
+    ig.innerHTML=ICONS[ic]||'';
+    if(!crowd&&n.state==='suggested') el('circle',{cx:n.x+r*.74,cy:n.y-r*.74,r:5.5,fill:'#FFB340',stroke:'#0B0B10','stroke-width':2.5},g);
+    const ly=n.y+r+(crowd?22:24)*M;
+    el('text',{x:n.x,y:ly,'text-anchor':'middle',class:'lbl'},g).textContent=n.name;
+    if(crowd) el('text',{x:n.x,y:ly+18*M,'text-anchor':'middle',class:'cnt'},g).textContent=n.crowd==null?'לא נאסף':fmt(n.crowd);
   }
   for(const n of Object.values(N)) n.justRevealed=false;
   legend();
@@ -343,99 +399,87 @@ function draw(){
 
 function legend(){
   const L=document.getElementById('legend');
-  if(lens==='crowd'){
-    L.innerHTML=`<span><i class="dot" style="background:var(--heat0)"></i>עד 5% מהמשתמשים</span><span><i class="dot" style="background:var(--heat1)"></i>5–15%</span><span><i class="dot" style="background:var(--heat2)"></i>15–35%</span><span><i class="dot" style="background:var(--heat3)"></i>מעל 35%</span><span><i class="dot" style="border:2px dashed var(--locked)"></i>פחות מ־${K}: מוסתר כדי לא לזהות אנשים</span><span>עובי ענף = כמה אנשים פתחו אותו</span>`;
-  } else {
-    L.innerHTML=`<span><i class="dot" style="background:var(--leaf)"></i>פתוח</span><span><i class="dot" style="background:var(--amber-soft);border:2px solid var(--amber)"></i>מוצע, ממתין לאישור</span><span><i class="dot" style="border:2px solid var(--locked)"></i>נעול</span><span><i class="dot" style="border:2px dashed var(--hidden)"></i>מוסתר</span><span><i class="dot" style="border:2px solid var(--guard)"></i>מוגן, לא מסיקים</span><span>השורשים = מה שסיפרת בהרשמה</span>`;
-  }
+  L.innerHTML = lens==='crowd'
+    ? `${HEAT.map((h,i)=>`<span><i class="dot" style="background:${h}"></i>${['עד 5%','5% עד 15%','15% עד 35%','מעל 35%'][i]}</span>`).join('')}<span><i class="dot" style="border:1.5px dashed rgba(255,255,255,.4)"></i>פחות מ־${K}: מוסתר</span><span>גודל ועובי = כמה אנשים אישרו</span>`
+    : `<span><i class="dot" style="background:#30D158"></i>פתוח</span><span><i class="dot" style="border:1.5px solid #FF9F0A;background:rgba(255,159,10,.15)"></i>מוצע, ממתין לאישור</span><span><i class="dot" style="border:1.5px solid rgba(255,255,255,.3)"></i>נעול</span><span><i class="dot" style="border:1.5px dashed rgba(255,255,255,.35)"></i>מוסתר</span><span><i class="dot" style="border:1.5px solid #8E8E93"></i>מוגן</span><span>במרכז: את. על הטבעת: מה שסיפרת בהרשמה</span>`;
 }
 
 // ---------- panel ----------
-function select(id){ sel=id; draw(); lens==='crowd'?crowdPanel(id):mePanel(id); if(id&&matchMedia('(max-width:900px)').matches) panel.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth',block:'start'}); }
-
+function select(id){
+  sel=id; draw(); lens==='crowd'?crowdPanel(id):mePanel(id);
+  if(id&&matchMedia('(max-width:900px)').matches) panel.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth',block:'start'});
+}
 function mePanel(id){
   const n=N[id];
   if(!n){ panel.innerHTML=intro(); bindPerm(); return; }
-  let h=`<span class="state st-${n.state}">${STATE_TXT[n.state]}</span><h2>${n.ico} ${n.name}</h2><p class="sub">${SRC_TXT[n.src]}</p>`;
+  let h=`<span class="state st-${n.state}">${STATE_TXT[n.state]}</span><h2>${tile(n)} ${n.name}</h2><p class="sub">${LIMBS[n.limb].name} · ${SRC_TXT[n.src]}</p>`;
   if(n.conf!=null && n.state!=='locked'){
-    h+=`<h3>כמה אנחנו בטוחים</h3><div class="conf" role="meter" aria-valuenow="${Math.round(n.conf*100)}" aria-valuemin="0" aria-valuemax="100"><i style="width:${n.conf*100}%;background:${n.state==='suggested'?'var(--amber)':'var(--leaf)'}"></i></div><small>${Math.round(n.conf*100)}%</small>`;
+    const pc=Math.round(n.conf*100);
+    h+=`<h3>כמה אנחנו בטוחים · ${pc}%</h3><div class="conf" role="meter" aria-valuenow="${pc}" aria-valuemin="0" aria-valuemax="100"><i style="width:${pc}%;background:${n.state==='suggested'?'var(--amber)':'var(--green)'}"></i></div>`;
   }
-  if(n.ev && n.state!=='locked'){ h+=`<h3>על מה זה מבוסס</h3><ul>${n.ev.map(e=>`<li>${e}</li>`).join('')}</ul>`; }
-  if(n.why){ h+=`<h3>למה אני רואה את זה</h3><div class="why">${n.why}</div>`; }
-  if(n.hint && n.state==='locked'){ h+=`<h3>מה פותח את זה</h3><div class="why">${n.hint}</div>`; }
-  if(n.badge && (n.state==='unlocked'||n.state==='mastered')){ h+=`<h3>תג</h3><span class="badge">${n.badge}</span>`; }
-  if(n.apps && n.state!=='guard'){ h+=`<h3>${n.state==='unlocked'||n.state==='mastered'?'פתוח בשבילך':'ייפתח אם תאשרי'}</h3><div class="apps">${n.apps.map(a=>`<span class="app"><em>${a[0]}</em>${a[1]}</span>`).join('')}</div>`; }
+  if(n.ev && n.state!=='locked') h+=`<h3>על מה זה מבוסס</h3><ul>${n.ev.map(e=>`<li>${e}</li>`).join('')}</ul>`;
+  if(n.why) h+=`<h3>למה אני רואה את זה</h3><div class="why">${n.why}</div>`;
+  if(n.hint && n.state==='locked') h+=`<h3>מה פותח את זה</h3><div class="why">${n.hint}</div>`;
+  if(n.badge && lit(n)) h+=`<h3>תג</h3><span class="badge" style="background:linear-gradient(160deg,${n.hue}DD,${n.hue});box-shadow:0 6px 16px ${n.hue}55">${icon(n.ic)} ${n.badge}</span>`;
+  if(n.apps && n.state!=='guard') h+=`<h3>${lit(n)?'פתוח בשבילך':'ייפתח אם תאשרי'}</h3><div class="apps">${n.apps.map(a=>`<span class="app">${tile(n)}${a}</span>`).join('')}</div>`;
   h+=`<div class="actions">`;
-  if(n.state==='suggested') h+=`<button class="btn primary" data-a="yes">כן, זו אני</button><button class="btn" data-a="no">לא נכון</button><button class="btn" data-a="hide">הסתירי</button>`;
-  if(n.state==='unlocked'||n.state==='mastered') h+= n.root?'':`<button class="btn" data-a="hide">הסתירי מהפרופיל</button><button class="btn warn" data-a="forget">מחקי את הראיות</button>`;
+  if(n.state==='suggested') h+=`<button class="btn primary" data-a="yes">כן, זו אני</button><button class="btn" data-a="no">לא נכון</button><button class="btn" data-a="later">לא עכשיו</button>`;
+  if(lit(n)) h+=`<button class="btn" data-a="hide">הסתירי מהפרופיל</button><button class="btn warn" data-a="forget">מחקי את הראיות</button>`;
   if(n.state==='hidden') h+=`<button class="btn" data-a="show">החזירי לפרופיל</button><button class="btn warn" data-a="forget">מחקי את הראיות</button>`;
   if(n.state==='guard') h+=`<button class="btn" data-a="tell">לספר בעצמי (אופציונלי)</button>`;
   h+=`</div>`;
   panel.innerHTML=h;
   panel.querySelectorAll('[data-a]').forEach(b=>b.addEventListener('click',()=>act(id,b.dataset.a)));
 }
-
 function act(id,a){
   const n=N[id];
   if(a==='yes'){ n.state='unlocked'; n.src='confirmed'; n.justRevealed=true; toast(`<b>${n.name}</b> נפתח. ${n.apps?'נפתחו '+n.apps.length+' מיני־אפים.':''}`); }
-  if(a==='no'){ n.state='locked'; n.ev=null; n.why=null; n.hint='סימנת שזה לא נכון. לא נציע את זה שוב.'; toast('הוסר. המערכת לומדת מזה.'); }
+  if(a==='no'){ n.state='locked'; n.ev=null; n.why=null; n.conf=null; n.hint='סימנת שזה לא נכון. לא נציע את זה שוב.'; toast('הוסר. לא נציע את זה שוב.'); }
+  if(a==='later'){ toast('בסדר. נשאל שוב רק בסיכום השבועי.'); select(null); nextCard(); return; }
   if(a==='hide'){ n.state='hidden'; n.why='הסתרת את הענף הזה. הוא נשאר רק אצלך ולא משמש להצעות.'; toast('הוסתר. רק את רואה אותו.'); }
   if(a==='show'){ n.state='unlocked'; n.justRevealed=true; toast('חזר לפרופיל.'); }
   if(a==='forget'){ n.state='locked'; n.ev=null; n.conf=null; n.why=null; n.hint='הראיות נמחקו. הענף ייפתח רק אם תחזרי לזה.'; toast('הראיות נמחקו.'); }
   if(a==='tell'){ toast('במוצר האמיתי: טופס קצר, הסכמה מפורשת, ומחיקה בלחיצה. כאן זה רק מוקאפ.'); return; }
   select(id); nextCard();
 }
-
 function intro(){
-  const open=Object.values(N).filter(n=>!n.root&&(n.state==='unlocked'||n.state==='mastered')).length;
-  const sug=Object.values(N).filter(n=>n.state==='suggested'&&visible(n)).length;
+  const open=Object.values(N).filter(lit).length;
+  const sug=Object.keys(N).filter(k=>N[k].state==='suggested'&&shown(k)).length;
   return `<h2>העץ שלך גדל ממה שאת עושה</h2><p class="sub">בהרשמה ידענו רק גיל, מין ועיר. כל השאר צמח מהשימוש.</p>
-  <p><strong>${open}</strong> ענפים פתוחים · <strong>${sug}</strong> מחכים לאישור שלך</p>
+  <div class="stats"><div class="stat"><b>${open}</b><span>ענפים פתוחים</span></div><div class="stat"><b style="color:var(--amber)">${sug}</b><span>מחכים לאישור</span></div></div>
   <div class="why">שום דבר לא נכנס לפרופיל בלי שתאשרי. כל עלה מראה על מה הוא מבוסס, ואפשר להסתיר או למחוק אותו.</div>
-  <h3>מה מותר למערכת ללמוד עלייך</h3><ul class="perm">${PERM.map(p=>`<li><span>${p.name}${p.fixed?`<br><small>${p.fixed}</small>`:''}</span>${p.fixed?`<button class="tog" disabled>${p.k==='health'?'חסום':'הצהרה'}</button>`:`<button class="tog" data-p="${p.k}" aria-pressed="${p.on}">${p.on?'מותר':'כבוי'}</button>`}</li>`).join('')}</ul>
-  <p class="empty" style="margin-top:14px">לחצי על עלה כתום כדי לראות מה זיהינו, או נסי אירוע למעלה.</p>`;
+  <h3>מה מותר למערכת ללמוד עלייך</h3><ul class="perm">${PERM.map(p=>{ const L=LIMBS[p.k]||{hue:p.hue||'#8E8E93'}; const ic=p.ic||(Object.values(N).find(n=>n.limb===p.k&&n.d===1)||{}).ic||'lock';
+    return `<li><span class="lab">${tile({hue:L.hue,ic})}<span>${p.name}${p.fixed?`<br><small>${p.fixed}</small>`:''}</span></span>${p.fixed?`<button class="tog" disabled>${p.k==='health'?'חסום':'הצהרה'}</button>`:`<button class="tog" data-p="${p.k}" aria-pressed="${p.on}" aria-label="${p.name}">${p.on?'מותר':'כבוי'}</button>`}</li>`; }).join('')}</ul>
+  <p class="empty" style="margin-top:14px">לחצי על עיגול כתום כדי לראות מה זיהינו, או נסי אירוע.</p>`;
 }
 function bindPerm(){ panel.querySelectorAll('[data-p]').forEach(b=>b.addEventListener('click',()=>{ const p=PERM.find(x=>x.k===b.dataset.p); p.on=!p.on; toast(p.on?`<b>${p.name}</b>: מותר ללמוד. הצעות יופיעו לאישור שלך.`:`<b>${p.name}</b>: כבוי. ההצעות בתחום הוסרו ולא ייאספו.`); draw(); panel.innerHTML=intro(); bindPerm(); nextCard(); })); }
 function nextCard(){
   const box=document.getElementById('next');
-  const id=lens==='me'&&Object.keys(N).find(k=>N[k].state==='suggested'&&visible(N[k]));
+  const id=lens==='me'&&Object.keys(N).find(k=>N[k].state==='suggested'&&shown(k));
   if(!id){ box.hidden=true; return; }
   const n=N[id]; box.hidden=false;
-  box.innerHTML=`<p><strong>הצעד הבא:</strong> נראה לנו ש${n.q||n.name}. נכון?</p><button class="btn primary" id="nx">לבדוק</button>`;
+  box.innerHTML=`<p><strong>הצעד הבא</strong> · נראה לנו ש${n.q||n.name}. נכון?</p><button class="btn" id="nx">לבדוק</button>`;
   document.getElementById('nx').onclick=()=>select(id);
 }
 
 // ---------- crowd lens ----------
-function signal(n){
-  const share=(n.crowd||0)/USERS, growth=n.growth||0, weight=n.weight||1;
-  return Math.round(Math.min(100,(share*120+growth*.9)*weight));
-}
-Object.assign(N.pets,{growth:22,weight:1.1});Object.assign(N.bigdog,{growth:38,weight:1.2});
-Object.assign(N.move,{growth:61,weight:1.3});Object.assign(N.veg,{growth:14,weight:1});
-Object.assign(N.family,{growth:6,weight:1.3});Object.assign(N.food,{growth:4,weight:.8});
-Object.assign(N.puppy,{growth:45,weight:1});Object.assign(N.hike,{growth:19,weight:1});
-Object.assign(N.cat,{growth:300,weight:1});Object.assign(N.sushi,{growth:9,weight:.7});Object.assign(N.bike,{growth:11,weight:1});Object.assign(N.hobby,{growth:3,weight:.5});Object.assign(N.home,{growth:5,weight:1});Object.assign(N.gan,{growth:8,weight:1});Object.assign(N.school,{growth:7,weight:1});Object.assign(N.photo,{growth:12,weight:1});Object.assign(N.ride,{growth:20,weight:1});
-
+const signal=n=>Math.round(Math.min(100,(((n.crowd||0)/USERS)*120+(n.growth||0)*.9)*(n.weight||1)));
 function crowdPanel(id){
-  const list=Object.entries(N).filter(([k,n])=>!n.root&&n.crowd!=null&&visible(n)).map(([k,n])=>({k,n,s:signal(n)})).sort((a,b)=>b.s-a.s);
-  const top=list.filter(x=>x.n.crowd>=100)[0];
-  const max=list[0].s||1;
-  let h=`<h2>איפה העץ נדלק</h2><p class="sub">${USERS.toLocaleString('he-IL')} משתמשים בדויים. נספרים רק ענפים שאנשים אישרו, ורק כסכומים. אף אדם לא מזוהה.</p>`;
-  if(id && N[id] && !N[id].root){
-    const n=N[id];
-    h+=`<div class="why"><strong>${n.ico} ${n.name}</strong><br>${n.crowd==null?'קטגוריה מוגנת. לא אוספים ולא סופרים.':n.crowd<K?`פחות מ־${K} אנשים. לא מציגים מספר, כדי שאי אפשר יהיה לזהות אף אחד.`:`${fmt(n.crowd)} אנשים · צמיחה ${n.growth||0}% ברבעון · ציון ${signal(n)}`}</div>`;
-  }
+  const list=Object.keys(N).filter(k=>N[k].crowd!=null&&shown(k)).map(k=>({k,n:N[k],s:signal(N[k])})).sort((a,b)=>b.s-a.s);
+  const top=list.filter(x=>x.n.crowd>=100)[0], max=list[0].s||1;
+  let h=`<h2>איפה העץ נדלק</h2><p class="sub">${USERS.toLocaleString('he-IL')} משתמשים בדויים. נספרים רק ענפים שאנשים אישרו, ורק כסכומים.</p>`;
+  if(id&&N[id]){ const n=N[id];
+    h+=`<div class="why"><strong>${n.name}</strong><br>${n.crowd==null?'קטגוריה מוגנת. לא אוספים ולא סופרים.':n.crowd<K?`פחות מ־${K} אנשים. לא מציגים מספר, כדי שאי אפשר יהיה לזהות אף אחד.`:`${fmt(n.crowd)} אנשים · צמיחה ${n.growth}% ברבעון · ציון ${signal(n)}`}</div>`; }
   h+=`<h3>ענפים לפי ציון ביקוש</h3><ul class="rank">`;
   for(const x of list.slice(0,7)){
-    h+=`<li data-k="${x.k}"><span>${x.n.ico} ${x.n.name}</span><small>${x.n.crowd<K?'מוסתר':x.s}</small><span class="bar"><i style="width:${x.n.crowd<K?0:x.s/max*100}%"></i></span></li>`;
+    const hid=x.n.crowd<K;
+    h+=`<li data-k="${x.k}">${tile(x.n)}<span>${x.n.name}</span><small>${hid?'מוסתר':x.s}</small><span class="meter"><i style="width:${hid?0:x.s/max*100}%;background:${heat(x.n.crowd)}"></i></span></li>`;
   }
   h+=`</ul>`;
-  if(top){
-    h+=`<div class="proposal"><h4>🤖 הצעה לסוכן: ${top.n.name}</h4>
-      <p>${fmt(top.n.crowd)} אנשים, צמיחה ${top.n.growth}% ברבעון. יש רק ${top.n.apps?top.n.apps.length:0} מיני־אפים בענף, כלומר ביקוש בלי היצע.</p>
-      <p>סוכן יבנה טיוטה של מיני־אפ חדש לענף, תקציב מוגבל, ושום דבר לא עולה לאוויר בלי אישור של אדמין.</p>
-      <div class="actions"><button class="btn primary" id="approve">אשר לסוכן לבנות טיוטה</button></div></div>`;
-  }
+  if(top) h+=`<div class="proposal"><h4>${icon('sparkles')} הצעה לסוכן: ${top.n.name}</h4>
+    <p>${fmt(top.n.crowd)} אנשים, צמיחה ${top.n.growth}% ברבעון. יש רק ${top.n.apps?top.n.apps.length:0} מיני־אפים בענף: ביקוש בלי היצע.</p>
+    <p>סוכן יבנה טיוטה של מיני־אפ לענף, בתקציב מוגבל. שום דבר לא עולה לאוויר בלי אישור של אדמין.</p>
+    <div class="actions"><button class="btn primary" id="approve">אשר לסוכן לבנות טיוטה</button></div></div>`;
   h+=`<p class="kanon">ענף עם פחות מ־${K} אנשים לא מוצג במספרים. סוכן מוצע רק מעל 100. קטגוריות רגישות לא נאספות בכלל.</p>`;
   panel.innerHTML=h;
   panel.querySelectorAll('.rank li').forEach(li=>li.addEventListener('click',()=>select(li.dataset.k)));
@@ -444,10 +488,9 @@ function crowdPanel(id){
 
 // ---------- events ----------
 function reveal(id,msg){ const n=N[id]; if(permOff(id)){ toast('הקטגוריה כבויה אצלה. לא לומדים מזה.'); return; } n.revealed=true; n.state='suggested'; n.justRevealed=true; toast(msg); select(id); nextCard(); }
-function guardToast(){ toast('<b>עצרנו.</b> עגלת תינוק יכולה לרמוז על הריון, וזה מידע רגיש. לא מסיקים. מציעים לה לבחור בעצמה אם לפתוח ענף.'); select('health'); }
 const evBox=document.getElementById('events');
 for(const e of EVENTS){ const b=document.createElement('button'); b.className='chip'; b.textContent=e.label; b.addEventListener('click',()=>{ if(lens!=='me') setLens('me'); e.run(); b.disabled=true; }); evBox.appendChild(b); }
-
+addEventListener('resize',()=>{clearTimeout(window.__rz);window.__rz=setTimeout(draw,150)});
 let tt; function toast(h){ const t=document.getElementById('toast'); t.innerHTML=h; t.classList.add('on'); clearTimeout(tt); tt=setTimeout(()=>t.classList.remove('on'),4200); }
 
 function setLens(l){
